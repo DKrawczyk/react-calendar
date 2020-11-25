@@ -2,17 +2,17 @@
 
 Tym razem będziemy wykorzystywać bibliotekę React do zbudowania prostej bazy danych przechowującej informacje o terminie spotkania z konkretną osobą (pobieramy przez formularz datę, godzinę, imię, nazwisko oraz email).
 
-Szczególną uwagę należy zwrócić na kompozycje (czyli podział na mniejsze komponenty), odpowiednie umiejscowienie i wykorzystanie `state` w celu komunikacji poszczególnych komponentów ze zobą poprzez `props`.
+Szczególną uwagę należy zwrócić na kompozycje (czyli podział na mniejsze komponenty), odpowiednie umiejscowienie i wykorzystanie `state` w celu komunikacji poszczególnych komponentów ze sobą poprzez `props`.
 
-Dane będziemy przechowywać na lokalnym API, wykorzystując gotowe rozwiązanie [json-server](https://github.com/typicode/json-server). Wspomniane rozwiązania zainstalujemy dzięki [npm](<https://pl.wikipedia.org/wiki/Npm_(manager_pakiet%C3%B3w)>) więc musimy mieć zainstalowany [Node.js](https://nodejs.org) w wersji co najmniej 10.16.
+Dane będziemy przechowywać na lokalnym API, wykorzystując gotowe rozwiązanie [json-server](https://github.com/typicode/json-server). Wspomniane rozwiązania zainstalujemy dzięki [npm](<https://pl.wikipedia.org/wiki/Npm_(manager_pakiet%C3%B3w)>) więc musimy mieć w systemie [Node.js](https://nodejs.org) w wersji co najmniej 10.16.
 
 Jeśli mamy API to będziemy chcieli wykorzystywać `fetch` do pobierania i zapisywania danych.
 
 ## Jaki mamy problem do rozwiązania
 
-Nasz znajomy [CEO](https://pl.wikipedia.org/wiki/Dyrektor_generalny) ma problem z organizacją swojego planu dnia ponieważ ciężko mu bez zbiorczej listy spotkań odpowiednio ustawić poszczególne spotkania na konkretny dzień.
+Nasz znajomy [CEO](https://pl.wikipedia.org/wiki/Dyrektor_generalny) ma problem z organizacją swojego planu dnia ponieważ ciężko mu bez zbiorczej listy spotkań odpowiednio ustawić plan dnia na konkretny dzień.
 
-Ty jako dobry kolega (i dobry programista) postanowiłeś mu pomóć (mająć z tyłu głowy, że projekt może się rozwinąć).
+Ty jako dobry kolega (i dobry programista) postanowiłeś mu pomóc - mając z tyłu głowy, że projekt może się rozwinąć.
 
 ## Niezbędne narzędzia
 
@@ -23,7 +23,7 @@ Na początek musimy przygotować nasze miejsce pracy. Projekt jest mały więc n
 Wykorzystamy paczkę npm-ową w celu skonfigurowania sobie React-a. Jeśli mamy node.js w wersji równej lub wyższej niż 8.16 oraz npm >= 5.2 to wystarczy, że uruchomisz
 
 ```javascript
-npx create-react-app@2 react-calendar
+npx create-react-app@3 react-calendar
 ```
 
 Zostanie wtedy utworzony katalog `react-calendar` i w nim będziesz miał już gotową strukturę swojej aplikacji. Spora część z tych elementów nie będzie przez Ciebie wykorzystywana, ale na chwilę obecną się tym nie przejmuj.
@@ -37,7 +37,7 @@ node - v;
 npm - v;
 ```
 
-Po instalacji przechodzimy do katalogu z zainstalowanymi paczkami tj `cd react-calendar` i dodamy adres do naszego repozytorium za pomocą:
+Po instalacji przechodzimy do katalogu z zainstalowanymi paczkami tj `cd react-calendar` i dodamy adres do naszego sklonowanego repozytorium za pomocą:
 
 ```
 git remote add origin [adres-repozytorium]
@@ -163,9 +163,9 @@ W momencie wysyłania danych powinniśmy sprawdzić czy są one prawidłowe:
 - lastName - ciąg znaków zawierający conajmniej 2 znaki
 - email - poprawny adres email - najlepiej będzie użyć [wyrażeń regularnych](https://kursjs.pl/kurs/regular.php)
 
-- date - poprawny format: YYYY-mm-dd, również wyrażenia regularne
+- date - poprawny format: YYYY-mm-dd, również użyjemy wyrażenia regularne
 
-- time - poprawny format: HH:mm, również wyrażenia regularne
+- time - poprawny format: HH:mm, również użyjemy wyrażenia regularne
 
 Jeśli tak to wywołujemy metodą z `props` jeśli nie to wyświetlamy odpowiedni komunikat użytkownikowi.
 
