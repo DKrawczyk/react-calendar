@@ -125,6 +125,8 @@ Na początek proponuje 3 komponenty
 Renderuje pozostałe komponenty oraz zawiera w `state` listę dat do wyświetlenia.
 To ten komponent posiada metody, które odpytują API w celu pobrania lub ustawienia danych.
 
+> Uwaga! Docelowo kod odpowiedzialny za odpytywanie API najlepiej trzymać w osobny pliku np. `calendarProvider.js`. W samym komponencie uruchamiamy odpowiednią metodę, w której obsługujemy odpowiedź z API.
+
 Pamiętaj, aby odpowiednie przygodować fetch:
 
 ```javascript
