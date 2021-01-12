@@ -23,10 +23,10 @@ Na początek musimy przygotować nasze miejsce pracy. Projekt jest mały więc n
 Wykorzystamy paczkę npm-ową w celu skonfigurowania sobie React-a. Jeśli mamy node.js w wersji równej lub wyższej niż 10.16 oraz npm >= 5.2 to wystarczy, że uruchomisz
 
 ```javascript
-npx create-react-app@3 react-calendar
+npx create-react-app@3 .
 ```
 
-Zostanie wtedy utworzony katalog `react-calendar` i w nim będziesz miał już gotową strukturę swojej aplikacji. Spora część z tych elementów nie będzie przez Ciebie wykorzystywana, ale na chwilę obecną się tym nie przejmuj.
+Znak `.` oznacza, że struktura aplikacji zostanie utworzona w obecnej lokalizacji. Spora część z tych elementów nie będzie przez Ciebie wykorzystywana, ale na chwilę obecną się tym nie przejmuj.
 
 **Uwaga!** Instalacja wszystkich zależności możę troszkę trwać dlatego uzbroj się w cierpliwość. Nie muszę chyba wspominać, że dostęp do Internetu jest niezbędny, aby instalować pakiety :)
 
@@ -37,19 +37,13 @@ node - v;
 npm - v;
 ```
 
-Po instalacji przechodzimy do katalogu z zainstalowanymi paczkami tj `cd react-calendar` i dodamy adres do naszego sklonowanego repozytorium za pomocą:
-
-```
-git remote add origin [adres-repozytorium]
-```
-
-Aby sprawdzić czy poprawnie dodaliśmy adres możemy skorzystać z komendy
+Po instalacji możemy sprawdzić czy nasze repozytorium posiada poprawne adresy zdalnego repozytorium:
 
 ```
 git remote -v
 ```
 
-Od tej pory możemy już `push`-ować nasze zmiany na GitHub-a.
+Jeśli w konsoli zobaczysz adres zawierający Twój login to oznacza, że możemy bez obaw `push`-ować nasze zmiany na GitHub-a.
 
 Aby uruchomić lokalny serwer, który będzie automatycznie odświeżał nasza stronę po każdej zmianie jest dostępny pod komendą
 
