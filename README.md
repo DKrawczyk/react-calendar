@@ -20,7 +20,7 @@ Na początek musimy przygotować nasze miejsce pracy. Projekt jest mały więc n
 
 ### Create React App
 
-Wykorzystamy paczkę npm-ową w celu skonfigurowania sobie React-a. Jeśli mamy node.js w wersji równej lub wyższej niż 8.16 oraz npm >= 5.2 to wystarczy, że uruchomisz
+Wykorzystamy paczkę npm-ową w celu skonfigurowania sobie React-a. Jeśli mamy node.js w wersji równej lub wyższej niż 10.16 oraz npm >= 5.2 to wystarczy, że uruchomisz
 
 ```javascript
 npx create-react-app@3 react-calendar
