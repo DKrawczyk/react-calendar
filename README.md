@@ -69,7 +69,7 @@ Po instalacji powinniśmy mieć dostęp do informacji o zainstalowanej wersji
 json-server -v
 ```
 
-Teraz w katalogu głównym naszej aplikacji tj `react-calendar` utworzymy sobie katalog `db`, a w nim stworzymy plik `data.json` i wrzucimy testowe dane tj.
+Teraz w katalogu głównym naszej aplikacji utworzymy sobie katalog `db`, a w nim stworzymy plik `data.json` i wrzucimy testowe dane tj.
 
 ```javascript
 {
