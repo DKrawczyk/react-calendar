@@ -60,7 +60,7 @@ Tą paczkę będziemy isntalować globalnie dlatego warto mieść uprawnienia ad
 W terminalu wpisujemy komendę:
 
 ```
-npm install -g json-server@0.15
+npm install -g json-server@0.16
 ```
 
 Po instalacji powinniśmy mieć dostęp do informacji o zainstalowanej wersji
