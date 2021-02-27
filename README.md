@@ -157,7 +157,7 @@ W momencie wysyłania danych powinniśmy sprawdzić czy są one prawidłowe:
 
 - firstName - ciąg znaków zawierający conajmniej 2 znaki
 - lastName - ciąg znaków zawierający conajmniej 2 znaki
-- email - poprawny adres email - najlepiej będzie użyć [wyrażeń regularnych](https://kursjs.pl/kurs/regular.php)
+- email - poprawny adres email - najlepiej będzie użyć [wyrażeń regularnych](https://kursjs.pl/kurs/regular/regular.php)
 
 - date - poprawny format: YYYY-mm-dd, również użyjemy wyrażenia regularne
 
