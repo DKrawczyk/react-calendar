@@ -174,10 +174,6 @@ Jeśli tak to wywołujemy metodą z `props` jeśli nie to wyświetlamy odpowiedn
 
 &nbsp;
 
-> :warning: _**Uwaga!** Pliki zaczynające się od `sandbox...` zostały dodane jedynie w celu wygodnego uruchomienia w [codesandbox.io](https://codesandbox.io/). Nie musisz się nimi przejmować._
-
-&nbsp;
-
 ## Dodatkowe zadania
 
 > Nie wykonuj powyższych zadań zanim nie zrobisz podstawowej funkcjonalności
