@@ -7,76 +7,75 @@
 
 # React Calendar
 
-Tym razem będziemy wykorzystywać bibliotekę React do zbudowania prostej bazy danych przechowującej informacje o terminie spotkania z konkretną osobą (pobieramy przez formularz datę, godzinę, imię, nazwisko oraz email).
+Twój znajomy [CEO](https://pl.wikipedia.org/wiki/Dyrektor_generalny) ma problem z organizacją, ponieważ ciężko mu bez zbiorczej listy spotkań odpowiednio ustawić plan dnia.
 
-Szczególną uwagę należy zwrócić na kompozycje (czyli podział na mniejsze komponenty), odpowiednie umiejscowienie i wykorzystanie `state` w celu komunikacji poszczególnych komponentów ze sobą poprzez `props`.
+Ty jako dobry kolega (i dobry programista) postanowiłeś mu pomóc – mając z tyłu głowy, że projekt może się rozwinąć.
 
-Dane będziemy przechowywać na lokalnym API, wykorzystując gotowe rozwiązanie [json-server](https://github.com/typicode/json-server). Wspomniane rozwiązania zainstalujemy dzięki [npm](<https://pl.wikipedia.org/wiki/Npm_(manager_pakiet%C3%B3w)>) więc musimy mieć w systemie [Node.js](https://nodejs.org) w wersji co najmniej 10.16.
+Wykorzystaj bibliotekę React do zbudowania prostej aplikacji z bazą danych przechowującą informacje o terminach spotkań.
 
-Jeśli mamy API to będziemy chcieli wykorzystywać `fetch` do pobierania i zapisywania danych.
+Przez formularz pobieraj dane: datę, godzinę, imię, nazwisko oraz e-mail.
 
-## Jaki mamy problem do rozwiązania
+Zwróć szczególną uwagę na kompozycję (czyli podział na mniejsze komponenty) oraz odpowiednie umiejscowienie i wykorzystanie `state` w celu komunikacji komponentów poprzez `props`.
 
-Nasz znajomy [CEO](https://pl.wikipedia.org/wiki/Dyrektor_generalny) ma problem z organizacją swojego planu dnia ponieważ ciężko mu bez zbiorczej listy spotkań odpowiednio ustawić plan dnia na konkretny dzień.
+Dane przechowuj na lokalnym API, wykorzystując gotowe rozwiązanie – [json-server](https://github.com/typicode/json-server). Zainstalujesz go dzięki [npm](<https://pl.wikipedia.org/wiki/Npm_(manager_pakiet%C3%B3w)>), więc musisz mieć w systemie [Node.js](https://nodejs.org) w wersji co najmniej 10.16.
 
-Ty jako dobry kolega (i dobry programista) postanowiłeś mu pomóc - mając z tyłu głowy, że projekt może się rozwinąć.
+Jeśli mamy API, to będziemy chcieli wykorzystać metodę `.fetch()` do pobierania i zapisywania danych.
 
 ## Niezbędne narzędzia
 
-Na początek musimy przygotować nasze miejsce pracy. Projekt jest mały więc na poczatek wykorzystamy gotowe rozwiązania, aby nie tracić czasu na konfigurację. Na początku najważniejsze jest działające [MVP](http://www.biznesowerewolucje.com/mvp-minimum-viable-product-praktycznie/).
+Musimy przygotować nasze miejsce pracy. Projekt jest mały, więc na początku wykorzystamy gotowe rozwiązania, aby nie tracić czasu na konfigurację. Najważniejsze jest działające [MVP](http://www.biznesowerewolucje.com/mvp-minimum-viable-product-praktycznie/).
 
 ### Create React App
 
-Wykorzystamy paczkę npm-ową w celu skonfigurowania sobie React-a. Jeśli mamy node.js w wersji równej lub wyższej niż 10.16 oraz npm >= 5.2 to wystarczy, że uruchomisz
+Wykorzystamy paczkę z npm w celu skonfigurowania Reacta. Jeśli masz Node.js w wersji 10.16 lub wyższej oraz npm w wersji 5.2 lub wyższej, to wystarczy, że uruchomisz:
 
-```javascript
+```
 npx create-react-app@3 .
 ```
 
-Znak `.` oznacza, że struktura aplikacji zostanie utworzona w obecnej lokalizacji. Spora część z tych elementów nie będzie przez Ciebie wykorzystywana, ale na chwilę obecną się tym nie przejmuj.
+Znak `.` oznacza, że struktura aplikacji zostanie utworzona w obecnej lokalizacji. Spora część z tych elementów nie będzie przez Ciebie wykorzystywana, ale w tej chwili się tym nie przejmuj.
 
-**Uwaga!** Instalacja wszystkich zależności możę troszkę trwać dlatego uzbroj się w cierpliwość. Nie muszę chyba wspominać, że dostęp do Internetu jest niezbędny, aby instalować pakiety :)
+**Uwaga!** Instalacja wszystkich zależności może trochę potrwać, dlatego uzbrój się w cierpliwość. Nie muszę chyba wspominać, że dostęp do Internetu jest niezbędny, aby instalować pakiety :)
 
-Jeśli nie jesteś pewny jaką wersją aplikacji posiadasz to możęsz to sprawdzić za pomocą flagi `-v`.
+Jeśli nie jesteś pewny, jaką wersją aplikacji posiadasz, sprawdzisz to za pomocą flagi `-v`.
 
 ```javascript
 node - v;
 npm - v;
 ```
 
-Po instalacji możemy sprawdzić czy nasze repozytorium posiada poprawne adresy zdalnego repozytorium:
+Po instalacji możesz też sprawdzić, czy Twoje repozytorium posiada poprawny adres zdalnego repozytorium:
 
 ```
 git remote -v
 ```
 
-Jeśli w konsoli zobaczysz adres zawierający Twój login to oznacza, że możemy bez obaw `push`-ować nasze zmiany na GitHub-a.
+Jeśli w konsoli zobaczysz adres zawierający Twój login, to oznacza, że możemy bez obaw pushować zmiany na GitHuba.
 
-Aby uruchomić lokalny serwer, który będzie automatycznie odświeżał nasza stronę po każdej zmianie jest dostępny pod komendą
+Lokalny serwer, który będzie automatycznie odświeżał naszą stronę po każdej zmianie, uruchomisz komendą:
 
 ```javascript
 npm start
 ```
 
-> **Uwaga!** webpack musi zawsze być uruchomiony jeśli nasza strona ma działać.
+> **Uwaga!** Jeśli nasza strona ma działać, webpack zawsze musi być uruchomiony.
 
-### json-server
+### JSON Server – przypomnienie
 
-Tą paczkę będziemy isntalować globalnie dlatego warto mieść uprawnienia administratora (sudo na Linux-ie), aby móc to zrobić.
+Paczka `json-server` powinna być zainstalowana globalnie, dlatego warto mieć uprawnienia administratora (sudo na Linuksie), aby móc to zrobić.
 
-W terminalu wpisujemy komendę:
+W terminalu wpisz komendę:
 
 ```
 npm install -g json-server@0.16
 ```
 
-Po instalacji powinniśmy mieć dostęp do informacji o zainstalowanej wersji
-
+Po instalacji powinieneś mieć dostęp do informacji o zainstalowanej wersji:
 ```
 json-server -v
 ```
 
-Teraz w katalogu głównym naszej aplikacji utworzymy sobie katalog `db`, a w nim stworzymy plik `data.json` i wrzucimy testowe dane tj.
+Teraz w katalogu głównym naszej aplikacji utwórz katalog  `db`, a w nim plik  `data.json`  i wrzuć do niego testowe dane, np.:
 
 ```javascript
 {
@@ -93,13 +92,12 @@ Teraz w katalogu głównym naszej aplikacji utworzymy sobie katalog `db`, a w ni
 }
 ```
 
-Jeśli masz już uruchomienego webpacka (`npm start`), to w kolejnym terminalu (lub wierszu poleceń) powinismy odpalić nasze API tj.
-
+Jeśli masz już uruchomionego webpacka (`npm start`), to w kolejnym terminalu (wierszu poleceń) uruchom API:
 ```
 json-server --watch ./db/data.json --port 3005
 ```
 
-Ustawiamy inny port niż domyślny tj. 3000 ponieważ na nim działa nasz webpack.
+Ustawiamy inny port niż domyślny (3000), aby być pewnym, że nic go nie blokuje.
 
 Od teraz możesz korzystać z API pod adresem:
 
@@ -107,28 +105,26 @@ Od teraz możesz korzystać z API pod adresem:
 http://localhost:3005/meetings
 ```
 
-> **Uwaga!** json-server musi zawsze być uruchomiony jeśli API ma działać.
+> **Uwaga!**  Jeśli API ma działać, json-server zawsze musi być uruchomiony.
+> 
+## Implementacja
 
-## Implementacja zadania
+W katalogu `src` znajdują się nasze źródła – utwórzmy w nim katalog `components` i tam przechowujmy wszystkie nasze komponenty.
 
-W katalogu głównym naszego projektu w katalogu `src` znajdują się nasze źródła.
+Każdy komponent powinien być umieszczony w osobnym pliku. Trzymajmy się konwencji, że każdy plik zawiera tylko klasę, którą eksportuje.
 
-Utwórzmy tam katalog `components` i tam przechwujmy wszystkie nasze komponenty.
+Plik powinien się nazywać tak jak klasa i również zaczynać się wielką literą.
 
-Każdy komponent powinien być umiesczony w osobnym pliku. Trzymajmy się konwencji, że każdy plik zawiera tylko klasę, którą eksportuje.
-
-Plik powinien się nazywać tak jak nazwa klasy (pozostawiąc wielką literę).
-
-Na początek proponuje 3 komponenty
+Na początek proponuję trzy komponenty.
 
 ### Calendar
 
-Renderuje pozostałe komponenty oraz zawiera w `state` listę dat do wyświetlenia.
+Renderuje pozostałe komponenty oraz zawiera w `state` listę spotkań do wyświetlenia.
 To ten komponent posiada metody, które odpytują API w celu pobrania lub ustawienia danych.
 
-> Uwaga! Docelowo kod odpowiedzialny za odpytywanie API najlepiej trzymać w osobny pliku np. `calendarProvider.js`. W samym komponencie uruchamiamy odpowiednią metodę, w której obsługujemy odpowiedź z API.
+> **Uwaga!** Docelowo kod odpowiedzialny za odpytywanie API najlepiej trzymać w osobny pliku, np. `calendarProvider.js`. W samym komponencie uruchamiamy wówczas już tylko odpowiednią metodę, w której obsługujemy odpowiedź z API.
 
-Pamiętaj, aby odpowiednie przygodować fetch:
+Pamiętaj, aby odpowiednio przygotować `.fetch()`:
 
 ```javascript
 fetch(this.apiUrl, {
@@ -152,66 +148,66 @@ fetch(this.apiUrl, {
 
 ### CalendarList
 
-Renderuje listę wszystkich aktualnych dat, wyszkorzystując dane przekazane przez `props` z `Calendar`.
+Renderuje listę wszystkich aktualnych spotkań, wykorzystując dane przekazane przez `props` z `Calendar`.
 
 ### CalendarForm
 
-Renderuje formularz, elementy formularza są kontrolowane przez `state` więc komponent ten możemy nazwać kontrolowanym.
+Renderuje formularz. Elementy formularza są kontrolowane przez `state`, więc komponent ten możemy nazwać kontrolowanym.
 
-W momencie wysłania formularza (event `submit`, pamietamy o `.preventDefault()`) należy uruchomić odpowiednią metodą przekazaną przez `props`, która zaaktualizuje state oraz wyśle nowe dane do API.
+Przed wysłaniem formularza, powinniśmy zweryfikować poprawność wprowadzonych danych (wykonać walidację) i sprawdzić czy:
 
-W momencie wysyłania danych powinniśmy sprawdzić czy są one prawidłowe:
+- `firstName` to ciąg znaków zawierający co najmniej 2 znaki
+- `lastName` to ciąg znaków zawierający co najmniej 2 znaki
+- `email` to poprawny adres e-mail
+- `date` ma poprawny format: YYYY-mm-dd
+- `time` ma poprawny format: HH:mm
 
-- firstName - ciąg znaków zawierający conajmniej 2 znaki
-- lastName - ciąg znaków zawierający conajmniej 2 znaki
-- email - poprawny adres email - najlepiej będzie użyć [wyrażeń regularnych](https://kursjs.pl/kurs/regular/regular.php)
+Do sprawdzenia adresu e-mail, daty i czasu najlepiej będzie użyć [wyrażeń regularnych](https://kursjs.pl/kurs/regular/regular.php).
 
-- date - poprawny format: YYYY-mm-dd, również użyjemy wyrażenia regularne
+Jeśli dane są niepoprawne, wyświetlamy użytkownikowi odpowiedni komunikat.
 
-- time - poprawny format: HH:mm, również użyjemy wyrażenia regularne
-
-Jeśli tak to wywołujemy metodą z `props` jeśli nie to wyświetlamy odpowiedni komunikat użytkownikowi.
+Jeśli dane są poprawne, wysyłamy je (event `submit`; pamiętajmy o `.preventDefault()`) i uruchamiamy odpowiednią metodę przekazaną przez `props`, która zaktualizuje stan w `<Calendar />` oraz wyśle nowe dane do API.
 
 &nbsp;
 
-## Dodatkowe zadania
+## Zadania dodatkowe
 
-> Nie wykonuj powyższych zadań zanim nie zrobisz podstawowej funkcjonalności
+> Nie wykonuj zadań dodatkowych zanim nie zrobisz podstawowej funkcjonalności.
 
-### Zadanie dodatkowe 1
+### Zadanie 1
 
-Spróbuj podzielić to zdanie na mniejsze "kawałki" tj. komponenty. Zastanów się, które elementy HTML występują wieloktronie i zastąp je komponentami.
+Spróbuj podzielić naszą aplikację na „kawałki”, czyli mniejsze komponenty. Zastanów się, które elementy HTML występują wielokrotnie i zastąp je komponentami.
 
-Przykładem może być np. element zawierający informacje o konkretnym spotkaniu. Tutaj moglibyśmy utworzyć `CalendarItem`.
+Przykładem jest element zawierający informacje o konkretnym spotkaniu. Tutaj moglibyśmy utworzyć `CalendarItem`.
 
-### Zdanie dodatkowe 2
+### Zadanie 2
 
-Wykorzystując odpowiednie style (zobacz plik `App.css` jak wygląda i jak jest podpiety do `App.js`) utwórz rozwiązanie, które pozwoli wyświetlać użytkownikowi podpowiedzi tzw. autocomplete - [przykład z jQuery](https://jqueryui.com/autocomplete/).
+Wykorzystując odpowiednie style (zobacz plik `App.css` – jak wygląda i jak jest podpięty do `App.js`) stwórz rozwiązanie, które pozwoli wyświetlać użytkownikowi podpowiedzi, tzw. autocomplete ([przykład z jQuery](https://jqueryui.com/autocomplete/)).
 
-Powiedzmy, że w momencie, gdy użytkownik wpisuje dane do pola formularza to wykonujemy zapytanie do API, które zwraca nam wszystkie dane, które zaczynają się od podanych znaków.
+Gdy użytkownik będzie wpisywał dane do pola formularza, to wykonamy zapytanie do API. W odpowiedzi otrzymamy wszystkie wartości, które zaczynają się od podanych znaków.
 
-Jak spojrzymy do [dokumentacji json-server-a](https://github.com/typicode/json-server#operators) to zauważymy, że możemy wykorzystać coś takiego:
+W [dokumentacji json-servera](https://github.com/typicode/json-server#operators) znajdziesz informację o tym, że możemy wykorzystać filtrowanie względem zapytania:
 
 ```
 /meetings?firstName_like=Ja
 
 ```
 
-Powiniśmy w ten sposób wyszukać wszystkie dane, które posiadają imię zaczynające się na `Ja`.
+Powinniśmy w ten sposób wyszukać wszystkie imiona zaczynające się na `Ja`.
 
-Mając już ten dane (pewnie przechowywane w `state`) powinniśmy je wyswietlić użytkownikowi poniżej inputa, do którego wprowadzał dane (pewnie bez `position: relative` + `absolute` się nie obejdzie).
+Otrzymane dane (pewnie przechowywane w `state`) wyświetlimy użytkownikowi poniżej uzupełnianego inputa (pewnie bez `position: relative` + `absolute` się nie obejdzie).
 
-Po kliknięciu przez użytkownika w element z listy zostanie uzupełniony input jego zawartością.
+Po kliknięciu przez użytkownika w element z listy input zostanie uzupełniony wskazaną wartością.
 
 ## Refaktoryzacja
 
-> Dokonaj refaktoryzacji co najmniej po skońcoznej i działającej podstawowej funkcjonalności
+> Dokonaj refaktoryzacji co najmniej po skończonej i działającej podstawowej funkcjonalności
 
-Zastanów się jakie elementy Twojego kodu można poprawić. Być może część kodu można napisać sprawniej i czytelniej?
+Zastanów się, jakie elementy Twojego kodu można poprawić. Być może część kodu można napisać lepiej i czytelniej?
 
-Postaraj się podzielić kod na mniejsze cześci dzięki metodom w klasie, które realizują po 1 konkretnym zadaniu - np. `getDataFromAPI()`, `postDataToAPI(data)`
+Postaraj się podzielić kod na mniejsze części: metody, które realizują po jednym konkretnym zadaniu, np. `getDataFromAPI()`, `postDataToAPI(data)`.
 
-Zastanów się np. czy przez `props` do `CalendarForm` nie można przekazać pól formularza w taki sposób, aby były one generowane autoamtycznie np.
+Przemyśl, czy przez `props` do `CalendarForm` nie można przekazać pól formularza w taki sposób, aby były one generowane automatycznie, np.
 
 ```javascript
 <CalendarForm
@@ -232,4 +228,3 @@ Zastanów się np. czy przez `props` do `CalendarForm` nie można przekazać pó
 > ⭐ ***README** to coś więcej niż opis. Poprzez nie **pokazujesz swoje mocne strony** – swoją dokładność, sposób myślenia i podejście do rozwiązywania problemów. Niech Twoje README pokaże, że masz **świetne predyspozycje do rozwoju!***
 > 
 > 🎁 *Zacznij od razu. Skorzystaj z **[szablonu README i wskazówek](https://github.com/devmentor-pl/readme-template)**.* 
-
