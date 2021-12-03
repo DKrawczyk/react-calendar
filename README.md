@@ -17,7 +17,7 @@ Przez formularz pobieraj dane: datę, godzinę, imię, nazwisko oraz e-mail.
 
 Zwróć szczególną uwagę na kompozycję (czyli podział na mniejsze komponenty) oraz odpowiednie umiejscowienie i wykorzystanie `state` w celu komunikacji komponentów poprzez `props`.
 
-Dane przechowuj na lokalnym API, wykorzystując gotowe rozwiązanie – [json-server](https://github.com/typicode/json-server). Zainstalujesz go dzięki [npm](<https://pl.wikipedia.org/wiki/Npm_(manager_pakiet%C3%B3w)>), więc musisz mieć w systemie [Node.js](https://nodejs.org) w wersji co najmniej 10.16.
+Dane przechowuj w pliku `.json` i pobieraj za pomocą lokalnego API. Wykorzystaj do tego gotowe rozwiązanie – [json-server](https://github.com/typicode/json-server).
 
 Jeśli mamy API, to będziemy chcieli wykorzystać metodę `.fetch()` do pobierania i zapisywania danych.
 
