@@ -4,8 +4,15 @@ npx create-react-app@3
 - sprawdzenie odpowiedniego repozytorium 
 git remote -v
 - stworzenie folderu database z plikiem data.json
-- odpalenie npm start i json-server --watch ./database/data.json --port 3005
+- odpalenie npm start i json-server --watch ./database/data.json --port 3005, aby port nei był blokowany
 - usunięcie niepotrzebnych elementó (?)
+
+Błąd Error: Objects are not valid as a React child (found: [object Promise]). If you meant to render a collection of children, use an array instead.
+
+Spowodowany połączeniem z API w render. Po połączeniu w component did mount problem znikł, po przeczytaniu infomracji na forum
+ https://pretagteam.com/question/objects-are-not-valid-as-a-react-child-found-object-promise-if-you-meant-to-render-a-collection-of-children-use-an-array-instead
+
+
 
 
 

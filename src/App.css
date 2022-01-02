@@ -1,0 +1,82 @@
+.main {
+    outline: 1px solid;
+    display: flex;
+    height: 100vh;
+    background: black;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.main__section {
+    background: white;
+    max-width: 1400px;
+    height: 75%;
+    width: 45%;
+}
+
+.darker {
+    outline: 1px solid;
+    height: 10%;
+}
+
+.brighter {
+    height: 20%;
+    outline: 1px solid;
+}
+
+.darker, .brighter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main__calendar {
+    height: 60%;
+}
+
+.list__days {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.calendar__row {
+    width: 100%;
+    height: calc(100%/6);
+    display: flex;
+    outline: 1px solid;
+}
+
+.calendar__day {
+    width: calc(100%/7);
+    outline: 1px solid;
+}
+
+.form__event {
+    height: 40%;
+    outline: 1px solid;
+    display: flex;
+}
+
+.event__insert {
+    outline: 1px solid;
+    width: 60%;
+    height: 100%;
+}
+
+.div__error{
+    outline: 1px solid;
+    width: 40%;
+    height: 100%;
+}
+
+.label {
+    height: 10%;
+}
+
+.div__informations {
+    outline: 1px solid;
+    height: 50%;
+    width: 100%;
+}
