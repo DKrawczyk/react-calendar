@@ -9,8 +9,19 @@ class Calendar extends React.Component{
 
     render() {
         console.log(this.state);
-        return(
+        // const date = new Date();
+        // const data = {};
+        // console.log(date);
+        // console.log(date.getFullYear());
+        // for (let i=0; i <10; i++) {
+        //     data[date.getFullYear() +i] = {};
+        //     for(let j=0; j<12; j++) {
+        //         data[date.getFullYear() +i][j + 1] = {};
+        //     }
+        // }
+        // console.log(data);
 
+        return(
             <main className="main container">
                 <section className="main__section">
                     <div className="div__main darker">
@@ -68,12 +79,12 @@ class Calendar extends React.Component{
                 }
                 return Promise.reject(resp);
             })
-            .then(data => this.renderData(data))
+            .then(data => this.getData(data))
             .catch(err => console.log(err.message))
             .finally(console.log('Data uploaded'))
     }
 
-    renderData(data) {
+    getData(data) {
         this.setState({
             data: data,
         })

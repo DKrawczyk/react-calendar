@@ -5,7 +5,10 @@ npx create-react-app@3
 git remote -v
 - stworzenie folderu database z plikiem data.json
 - odpalenie npm start i json-server --watch ./database/data.json --port 3005, aby port nei był blokowany
-- usunięcie niepotrzebnych elementó (?)
+- usunięcie niepotrzebnych elementów (?)
+- szkic html i podstawowy css
+- formularze kontrolowane, wysyłanie nowego spotkania
+- onChange error, jakie będzie rozwiązanie?
 
 Błąd Error: Objects are not valid as a React child (found: [object Promise]). If you meant to render a collection of children, use an array instead.
 
