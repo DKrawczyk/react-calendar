@@ -1,38 +1,68 @@
 import React from "react";
 import CalendarForm from "./CalendarForm";
 import CalendarList from "./CalendarList";
+import CalendarSwitcher from "./CalendarSwitcher";
 class Calendar extends React.Component{
 
     state = {
-        data:[]
+        data:[],
+        days:['Pn', 'Wt', 'Sr', 'Czw', 'Pt', 'Sb', 'Nd'],
+        months:['Syczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
     }
 
     render() {
+        const {months} = this.state;
         console.log(this.state);
-        // const date = new Date();
-        // const data = {};
+        
+        const date = new Date(2022, 0, 1);
+        let data = {};
+        let days = []
         // console.log(date);
+        while (date.getMonth() === 0) {
+            days.push(new Date(date));
+            date.setDate(date.getDate() + 1);
+          }
+        // console.log(days);
+        // console.log(months[today.getMonth()])
+        // const test2 = test.split('');
+        // console.log(test2[]);
+   
+        // test.toDateString();
+        // console.log(test);
+        // console.log(typeof days);
+
+        // console.log(date.today);
         // console.log(date.getFullYear());
+        // console.log(months[date.getMonth()])
         // for (let i=0; i <10; i++) {
         //     data[date.getFullYear() +i] = {};
+
         //     for(let j=0; j<12; j++) {
-        //         data[date.getFullYear() +i][j + 1] = {};
+        //         data[date.getFullYear() +i][j +1] = {};
+
         //     }
         // }
+
+        // for (let i=0; i <10; i++){
+            // data[date.getFullYear() +i]={}
+            // for(let j=0; j <12; j++) {
+                // data[date.getFullYear() +i][j + 1] = {};
+                // data[months[date.getMonth() +j][j]] = {};
+                // console.log(months[date.getMonth() +j])
+            // }
+        // }
+        // console.log(data);
+
         // console.log(data);
 
         return(
             <main className="main container">
                 <section className="main__section">
                     <div className="div__main darker">
-                        <button className="button button__previous">{'<'}</button>
-                        <span className="main-year">2021</span>
-                        <button className="button button__next">{'>'}</button>
+                        <CalendarSwitcher title="main__year" months={months}/>
                     </div>
                     <div className="div__main brighter">
-                        <button className="button button__previous">{'<'}</button>
-                        <span className="main__month">MAJ</span>
-                        <button className="button button__next">{'>'}</button>
+                        <CalendarSwitcher title="main__month" months={months}/>
                     </div>
                     <div className="div__main darker div__list">
                         <ul className="list__days">
@@ -59,9 +89,7 @@ class Calendar extends React.Component{
                 </section>
                 <section className="main__section">
                     <header className="darker">
-                        <button className="button button__previous">{'<'}</button>
-                        <span className="chosen__month">MAJ, 2 2022</span>
-                        <button className="button button__next">{'>'}</button>
+                        <CalendarSwitcher title="chosen__day" months={months}/>
                     </header>
                 <CalendarForm />
                 <CalendarList />
@@ -90,15 +118,13 @@ class Calendar extends React.Component{
         })
     }
 
-    test() {
-        const {data} = this.state;
-        if(data.length > 0) {
-            console.log('true')
-            data.map(el =>console.log(el))
-            return data.map(meeting => {
-                return <li>{meeting.date}</li>
-            })
-        }
+    calendarData() {
+        const {months} = this.state;
+
+        const today = new Date();
+        const currentDay = `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`
+        console.log(currentDay);
+        
     }
 
 }
