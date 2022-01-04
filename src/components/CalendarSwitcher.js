@@ -1,44 +1,34 @@
 import React from "react";
 
-class CalendarSwitcher extends React.Component {
+function CalendarSwitcher(props) {
 
-    render() {
-        // console.log(this.props);
-        const {title, months} = this.props;
-        return (
-            <>
-                <button onClick = {this.changeDate} className="button button__previous">{'<'}</button>
-                <span className={title}>{this.getDate()}</span>
-                <button className="button button__next">{'>'}</button>
-            </>
-        )
-    }
+    const {title, months, prevEvent, nextEvent} = props;
 
-    getDate() {
-        const {title, months} = this.props;
-        const today = new Date();
-        const currentDay = `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
+    return (
+        <>
+            <button onClick={prevEvent} className="button button__previous">{'<'}</button>
+            <span className={title}>{getDate()}</span>
+            <button onClick={nextEvent} className="button button__next">{'>'}</button>
+        </>
+    )
+
+    function getDate() {
+        const {title, months, currYear, currMonth} = props;
+        const today = new Date(); 
+        const currentDay = `${today.getDate()} ${months[currMonth]} ${currYear}`;
 
         if (title === 'main__year') {
-            return today.getFullYear();
+            return currYear;
         }
         else if (title === 'main__month') {
-            return months[today.getMonth()];
+            return months[currMonth];
         }
         else if (title === 'chosen__day') {
             return currentDay;
         }
     }
 
-    changeDate = (e) => {
-        const current = e.target;
-        
-        if(current.nextElementSibling.className.includes('main__month')) {
-        }
-        console.log('click');
-        // counter ++;
-    }
-
 }
+
 
 export default CalendarSwitcher;
