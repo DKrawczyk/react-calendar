@@ -106,12 +106,25 @@ class Calendar extends React.Component{
     }
 
     prevYear = () => {
-        let {counter} = this.state;
 
-        this.setState({
-            counter: --counter,
-            currentYear: new Date().getFullYear() + counter,
-        }, () => console.log(this.state))
+        const test = new Date()
+        // console.log(test.getFullYear());
+        test.setFullYear(test.getFullYear() +1)
+        console.log(test.getFullYear());
+        // const newTest = new Date();
+        // console.log(newTest.getMonth())
+        // newTest.setMonth(newTest.getMonth() +1);
+        // console.log(newTest.getMonth());
+
+        console.log()
+
+        let {counter} = this.state;
+        // const nextYear = ;
+        // console.log(nextYear);
+        // this.setState({
+            // counter: --counter,
+            // currentYear: new Date().nextYear,
+        // }, () => console.log(this.state))
     }
 
     nextYear = () => {
@@ -134,7 +147,7 @@ class Calendar extends React.Component{
 
     nextMonth = () => {
         let {counter} = this.state;
-
+        
         this.setState({
             counter: ++counter,
             currentMonth: new Date().getMonth() + counter,
