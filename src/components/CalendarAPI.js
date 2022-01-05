@@ -1,5 +1,3 @@
-import React from "react";
-
 class CalendarAPI {
     constructor() {
         this.apiUrl = 'http://localhost:3005/meetings';

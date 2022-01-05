@@ -65,7 +65,6 @@ class Calendar extends React.Component{
     }
 
     getData(data) {
-        console.log(data);
         this.setState({
             data: data,
         })
@@ -105,9 +104,9 @@ class Calendar extends React.Component{
 
     setPrevYear = () => {
         let {year} = this.state.counter;
-
+        console.log('set?')
         year -= 1;
-
+        // debugger;
         this.setState({
             counter: {...this.state.counter, year},
             currentYear: new Date().getFullYear() +year,
@@ -147,10 +146,14 @@ class Calendar extends React.Component{
         }, () => console.log(this.state))
     }
 
+
     setMonthValue(value) {
         let {month, year} = this.state.counter;
+        // debugger;
         if(value === 'prev') {
-            month -= 1;
+            month = month - 1;
+
+            
             if(month < 0) {
                 month = 11;
                 this.setPrevYear();
@@ -159,6 +162,8 @@ class Calendar extends React.Component{
                     // currentMonth: new Date().getMonth() + month,
                 // }, () => console.log(this.state))
             }
+
+
             return month;
         }
 

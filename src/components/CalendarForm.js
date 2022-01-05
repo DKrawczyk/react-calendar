@@ -43,7 +43,7 @@ class CalendarForm extends React.Component {
 
     renderInformation() {
         const {infoArray} = this.state;
-        // console.log(infoArray)
+
         if(infoArray.length === 0) {
             return(
                 <h1>You can add here new meeting! :)</h1>
