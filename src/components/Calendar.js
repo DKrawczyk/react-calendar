@@ -15,11 +15,6 @@ class Calendar extends React.Component{
 
     state = {
         data:[],
-        counter: {
-            year:0,
-            month:0,
-            day:0,
-        },
         currentDay: new Date().getDate(),
         currentYear: new Date().getFullYear(),
         currentMonth: new Date().getMonth(),
@@ -33,10 +28,10 @@ class Calendar extends React.Component{
             <main className="main container">
                 <section className="main__section">
                     <div className="div__main darker">
-                        <CalendarSwitcher title="main__year" currYear={currentYear} currMonth={currentMonth} months={months} prevEvent={this.setPrevYear} nextEvent={this.setNextYear}/>
+                        <CalendarSwitcher title="main__year" currYear={currentYear} currMonth={currentMonth} months={months} prevEvent={this.getPrevYear} nextEvent={this.getNextYear}/>
                     </div>
                     <div className="div__main brighter">
-                        <CalendarSwitcher title="main__month" currYear={currentYear} currMonth={currentMonth} months={months} prevEvent={this.setPrevMonth} nextEvent={this.setNextMonth}/>
+                        <CalendarSwitcher title="main__month" currYear={currentYear} currMonth={currentMonth} months={months} prevEvent={this.getPrevMonth} nextEvent={this.getNextMonth}/>
                     </div>
                     <CalendarWeekDays days={days}/>
                     <main className="main__calendar">
@@ -47,7 +42,7 @@ class Calendar extends React.Component{
                 </section>
                 <section className="main__section">
                     <header className="darker">
-                        <CalendarSwitcher title="chosen__day" currYear={currentYear} currMonth={currentMonth} months={months}/>
+                        <CalendarSwitcher title="chosen__day" currYear={currentYear} currMonth={currentMonth} currDay={currentDay} months={months} prevEvent={this.getPrevDay}/>
                     </header>
                 <CalendarForm />
                 <CalendarList />
@@ -100,89 +95,122 @@ class Calendar extends React.Component{
         return new Date(currentYear, currentMonth +1, 0).getDate();
     }
 
-    //refactoring
 
-    setPrevYear = () => {
-        let {year} = this.state.counter;
-        console.log('set?')
-        year -= 1;
-        // debugger;
+    getPrevYear = () => {
+        let {currentYear} = this.state;
+        currentYear--;
+
         this.setState({
-            counter: {...this.state.counter, year},
-            currentYear: new Date().getFullYear() +year,
-        }, () => console.log(this.state))
+            currentYear: currentYear,
+        })
     }
     
-
-
-
-    setNextYear = () => {
-        let {year} = this.state.counter;
-
-        year += 1;
+    getNextYear = () => {
+        let {currentYear} = this.state;
+        currentYear++;
 
         this.setState({
-            counter: {...this.state.counter, year},
-            currentYear: new Date().getFullYear() +year,
-        }, () => console.log(this.state))
+            currentYear: currentYear,
+        })
     }
 
-    setPrevMonth = () => {
-        let month = this.setMonthValue('prev');
-        console.log(month);
+    getPrevMonth = () => {
+        let {currentMonth, currentYear} = this.state;
+        currentMonth--;
+
+        if(currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
 
         this.setState({
-            counter: {...this.state.counter, month},
-            currentMonth: new Date().getMonth() +month,
-        }, () => console.log(this.state))
+            currentMonth: currentMonth,
+            currentYear: currentYear,
+        })
     }
 
-    setNextMonth = () => {
-        let month = this.setMonthValue('next');
-        console.log(month);
+    getNextMonth = () => {
+        let {currentMonth, currentYear} = this.state;
+        currentMonth++;
+
+        if(currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+
         this.setState({
-            counter: {...this.state.counter, month},
-            currentMonth: new Date().getMonth() +month,
-        }, () => console.log(this.state))
+            currentMonth: currentMonth,
+            currentYear: currentYear,
+        })
     }
 
+    getPrevDay = () => {
+        let {currentDay, currentMonth, currentYear} = this.state;
+        
+        currentDay--;
+        console.log(currentDay, currentMonth)
 
-    setMonthValue(value) {
-        let {month, year} = this.state.counter;
-        // debugger;
-        if(value === 'prev') {
-            month = month - 1;
-
+        if(currentDay === 0) {
+            console.log('test', currentMonth);
             
-            if(month < 0) {
-                month = 11;
-                this.setPrevYear();
-                // this.setState({
-                    // counter: {...this.state.counter, month},
-                    // currentMonth: new Date().getMonth() + month,
-                // }, () => console.log(this.state))
+            if(currentMonth === 0 || currentMonth === 3 || currentMonth === 5 || currentMonth === 7 || currentMonth === 8 || currentMonth === 10) {
+                currentDay = 31;
+                console.log('zero')
+                this.setState({
+                    currentDay: currentDay,
+                })
+            }
+            if(currentMonth === 2 || currentMonth === 4 || currentMonth === 6 || currentMonth === 9 || currentMonth === 11) {
+                // currentMonth --;
+                currentDay = 30;
+                this.setState({
+                    currentDay: currentDay,
+                })
+            }
+            // if(currentMonth === 1 && this.leapYear(currentYear)){
+            //     currentDay = 28;
+            //     this.setState({
+            //         currentDay: currentDay,
+            //     })
+            // }
+            // else if (currentMonth === 1){
+            //     console.log('test');
+            //     currentDay = 29;
+            //     this.setState({
+            //         currentDay: currentDay,
+            //     })
+            // }
+            currentMonth --;
+            if(currentMonth < 0) {
+
+                currentMonth = 11;
+                currentYear--;
+        
+                this.setState({
+                    currentMonth: currentMonth,
+                    currentYear: currentYear,
+                })
             }
 
-
-            return month;
+            this.setState({
+                currentMonth: currentMonth,
+                currentDay: currentDay,
+            })
+        }
+        
+        else {
+            console.log('luty');
         }
 
-
-
-        else if(value === 'next') {
-            month += 1;
-            if(month >= 12) {
-                month = 0;
-                year += 1;
-                // this.setNextYear();
-                // this.setState({
-                //     counter: {...this.state.counter, year},
-                //     currentYear: new Date().getFullYear() +year,
-                // }, () => console.log(this.state))
-            }
-            return month;
-        }
+        this.setState({
+            currentDay: currentDay,
+        })
     }
+
+    // leapYear(year) {
+    //     return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+    // }
+    
 }
 
 export default Calendar;

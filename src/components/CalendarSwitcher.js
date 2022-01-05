@@ -13,9 +13,8 @@ function CalendarSwitcher(props) {
     )
 
     function getDate() {
-        const {title, months, currYear, currMonth} = props;
-        const today = new Date(); 
-        const currentDay = `${today.getDate()} ${months[currMonth]} ${currYear}`;
+        const {title, months, currYear, currMonth, currDay} = props;
+        const currentDay = `${currDay} ${months[currMonth]} ${currYear}`;
 
         if (title === 'main__year') {
             return currYear;
