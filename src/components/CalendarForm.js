@@ -1,6 +1,11 @@
 import React from "react";
+import CalendarAPI from "./CalendarAPI";
 
 class CalendarForm extends React.Component {
+    constructor(){
+        super()
+        this.api = new CalendarAPI();
+    }
     state = {
             userName: '',
             userLastName: '',
@@ -45,16 +50,16 @@ class CalendarForm extends React.Component {
             )
         }
         else{
-            return infoArray.map(error =>{
+            return infoArray.map(message =>{
                 return (
                     <ul className="error__list">
-                        <li className="error">{error}</li>
+                        <li className="error">{message}</li>
                     </ul>
                 )
             })
         }
     }
-
+//refactoring
     dataValidation = (event) => {
         const {userName, userLastName, userEmail, date, time} = this.state;
 
@@ -131,18 +136,7 @@ class CalendarForm extends React.Component {
     }
 
     sendNewMeeting(data) {
-        const options = {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {'Content-Type': 'application/json'}
-        }
-        return fetch('http://localhost:3005/meetings', options)
-            .then(resp => {
-                if (resp.ok) {
-                    return resp.json();
-                }
-            return Promise.reject(resp);
-            })
+        return this.api.uploadData(data) 
             .catch(err => console.log(err.message))
             .finally('New meeting uploaded');
     }

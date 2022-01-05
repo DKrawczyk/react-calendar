@@ -10,7 +10,7 @@ git remote -v
 - formularze kontrolowane, wysyłanie nowego spotkania
 - onChange error, jakie będzie rozwiązanie?
 - wyświetlanie aktualnej daty poprzej getDate()
-
+- wyrażenia regularne, regex
 
 
 Błąd Error: Objects are not valid as a React child (found: [object Promise]). If you meant to render a collection of children, use an array instead.
