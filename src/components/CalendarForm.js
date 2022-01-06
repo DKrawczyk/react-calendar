@@ -28,7 +28,7 @@ class CalendarForm extends React.Component {
                     <input type="submit" className="event__submit"></input>
                 </div>
                 <div className="div__error">
-                    {this.renderInformation()}
+                    {this.renderInformation}
                 </div>
             </form>
         )
@@ -119,7 +119,7 @@ class CalendarForm extends React.Component {
             user: userName,
             lastName: userLastName,
             email: userEmail,
-            data: date,
+            date: this.setCorrectDate(date),
             time: time,
         }
 
@@ -135,8 +135,36 @@ class CalendarForm extends React.Component {
         this.sendNewMeeting(newMeeting);
     }
 
+    setCorrectDate(date) {
+        let newDate = this.setCorrectMonth(date)
+        newDate = this.setCorrectDay(newDate)
+        return newDate;
+    }
+
+    setCorrectMonth(date){
+        console.log('month')
+        if(date.charAt(5) === '0') {
+            return date.slice(0,5) + date.slice(6, date.length);
+        }
+        return date;
+    }
+
+    setCorrectDay(date) {
+        console.log(date);
+        if(date.charAt(7) === '0') {
+            return date.slice(0,7) + date.slice(8, date.length);
+        }
+        else if(date.charAt(8) === '0'){
+            return date.slice(0,8) + date.slice(9, date.length);
+        }
+
+        return date;
+    }
+
     sendNewMeeting(data) {
+        const {addData} = this.props;
         return this.api.uploadData(data) 
+            .then(resp => addData(resp))
             .catch(err => console.log(err.message))
             .finally('New meeting uploaded');
     }

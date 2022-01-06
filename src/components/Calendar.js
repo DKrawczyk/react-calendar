@@ -19,11 +19,12 @@ class Calendar extends React.Component{
         currentYear: new Date().getFullYear(),
         currentMonth: new Date().getMonth(),
         days:['Pn', 'Wt', 'Sr', 'Czw', 'Pt', 'Sb', 'Nd'],
-        months:['Syczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
+        months:['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
     }
 
     render() {
-        const {currentDay, currentYear, currentMonth, months, days} = this.state;
+        const {data, currentDay, currentYear, currentMonth, months, days} = this.state;
+        console.log(currentYear, currentMonth, currentDay);
         return(
             <main className="main container">
                 <section className="main__section">
@@ -42,10 +43,10 @@ class Calendar extends React.Component{
                 </section>
                 <section className="main__section">
                     <header className="darker">
-                        <CalendarSwitcher title="chosen__day" currYear={currentYear} currMonth={currentMonth} currDay={currentDay} months={months} prevEvent={this.getPrevDay}/>
+                        <CalendarSwitcher title="chosen__day" currYear={currentYear} currMonth={currentMonth} currDay={currentDay} months={months} prevEvent={this.getPrevDay} nextEvent={this.getNextDay}/>
                     </header>
-                <CalendarForm />
-                <CalendarList />
+                <CalendarForm addData={this.addNewEvent}/>
+                <CalendarList list={this.findMeetings}/>
                 </section>
             </main>
 
@@ -62,7 +63,7 @@ class Calendar extends React.Component{
     getData(data) {
         this.setState({
             data: data,
-        })
+        });
     }
 
     getDay() {
@@ -144,14 +145,48 @@ class Calendar extends React.Component{
         })
     }
 
+    addNewEvent = (newMeeting) => {
+        const {data} = this.state;
+        this.setState({
+            data:[...data, newMeeting]
+        })
+    }
+
+    findMeetings = () => {
+        const {data, currentDay, currentYear, currentMonth} = this.state;
+        
+        if(data.length > 0) {
+            const currentData = `${currentYear}-${currentMonth+1}-${currentDay}`;
+            const todayEvents = data.filter(meeting => {
+                return meeting.date === currentData;
+            });
+            console.log(todayEvents);
+            return todayEvents;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     getPrevDay = () => {
         let {currentDay, currentMonth, currentYear} = this.state;
         
         currentDay--;
-        console.log(currentDay, currentMonth)
+        // console.log(currentDay, currentMonth)
 
         if(currentDay === 0) {
-            console.log('test', currentMonth);
+
+            // console.log('test', currentYear);
             
             if(currentMonth === 0 || currentMonth === 3 || currentMonth === 5 || currentMonth === 7 || currentMonth === 8 || currentMonth === 10) {
                 currentDay = 31;
@@ -160,6 +195,7 @@ class Calendar extends React.Component{
                     currentDay: currentDay,
                 })
             }
+
             if(currentMonth === 2 || currentMonth === 4 || currentMonth === 6 || currentMonth === 9 || currentMonth === 11) {
                 // currentMonth --;
                 currentDay = 30;
@@ -167,6 +203,7 @@ class Calendar extends React.Component{
                     currentDay: currentDay,
                 })
             }
+
             // if(currentMonth === 1 && this.leapYear(currentYear)){
             //     currentDay = 28;
             //     this.setState({
@@ -181,9 +218,10 @@ class Calendar extends React.Component{
             //     })
             // }
             currentMonth --;
-            if(currentMonth < 0) {
 
-                currentMonth = 11;
+            if(currentMonth < 0) {
+                console.log(currentYear);
+                currentMonth = 11;  
                 currentYear--;
         
                 this.setState({
@@ -199,9 +237,55 @@ class Calendar extends React.Component{
         }
         
         else {
-            console.log('luty');
+            // console.log('luty');
         }
 
+        this.setState({
+            currentDay: currentDay,
+        })
+    }
+
+    getNextDay = () => {
+        let {currentDay, currentMonth, currentYear} = this.state;
+        currentDay++;
+        
+        console.log(currentDay, currentMonth)
+        if(currentDay > 31 && currentMonth === 0 || currentMonth === 3 || currentMonth === 5 || currentMonth === 7 || currentMonth === 8 || currentMonth === 10 ) {
+            (console.log('jeden'))
+            currentMonth ++;    
+            currentDay = 1;
+
+            this.setState({
+                currentMonth: currentMonth,
+                currentDay: currentDay,
+            })
+        }
+        else if(currentDay === 31 && currentMonth === 2 || currentMonth === 4 || currentMonth === 6 || currentMonth === 9 || currentMonth === 11) {
+            console.log(currentMonth)
+            // currentMonth ++;
+            currentDay = 1;
+            if(currentMonth > 11) {
+                
+                console.log('tu');
+                currentMonth = 0;  
+                currentYear++;
+            //     console.log('dwa')
+                this.setState({
+                    currentMonth: currentMonth,
+                    currentYear: currentYear,
+                })
+            }
+
+
+            console.log('cztery')
+            // console.log(currentDay)
+            this.setState({
+                currentMonth: currentMonth,
+                currentDay: currentDay,
+            })
+        }
+        console.log('trzy')
+        
         this.setState({
             currentDay: currentDay,
         })
@@ -211,6 +295,30 @@ class Calendar extends React.Component{
     //     return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
     // }
     
+    // console.log(data);
+    
+    // // console.log(currentYear, currentMonth, currentDay)
+    // // console.log(`${currentYear}-${currentMonth}-${currentDay}`);
+    // // const test = data.filter(item => item.date === `${currentYear}-${currentMonth}-${currentDay}`);
+    // // console.log(test);
+    
+    // // data.filter(item => item.data === `${}`)
+    // const string = 'abcdefg';
+    // console.log(string);
+    // const changed = string.slice(3,5);
+    // console.log(changed);
+    // const testChange = data.map((el) => {
+    //     
+    //     // if(el.date.charAt(5) === '0') {
+
+    //     // }
+    //     if(el.date.charAt(8) === '0') {
+    //         return el.date.replace(8, '');
+    //     }
+    //     console.log(el.date)
+    //     return el;
+    // })
+    // console.log(testChange);
 }
 
 export default Calendar;

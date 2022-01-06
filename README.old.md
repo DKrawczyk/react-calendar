@@ -11,6 +11,7 @@ git remote -v
 - onChange error, jakie będzie rozwiązanie?
 - wyświetlanie aktualnej daty poprzej getDate()
 - wyrażenia regularne, regex
+- sprowadzenie odpowiedniej formy daty z formularza aby wyczukac aktywne spotkania
 
 
 Błąd Error: Objects are not valid as a React child (found: [object Promise]). If you meant to render a collection of children, use an array instead.
