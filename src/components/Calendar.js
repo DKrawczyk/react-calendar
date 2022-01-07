@@ -46,7 +46,11 @@ class Calendar extends React.Component{
                         <CalendarSwitcher title="chosen__day" currYear={currentYear} currMonth={currentMonth} currDay={currentDay} months={months} prevEvent={this.getPrevDay} nextEvent={this.getNextDay}/>
                     </header>
                 <CalendarForm addData={this.addNewEvent}/>
-                <CalendarList list={this.findMeetings}/>
+                <div className="div__informations">
+                    <ul className="events__list">
+                        <CalendarList list={this.findMeetings()} months={months}/>
+                    </ul>
+                </div>    
                 </section>
             </main>
 
@@ -87,7 +91,6 @@ class Calendar extends React.Component{
         for (let i=1; i<=this.getDaysInMonth(); i++) {
             days.push(<label key={uuid()} className="calendar__day">{i}</label>)
         }
-
         return days;
     }
 
@@ -95,7 +98,6 @@ class Calendar extends React.Component{
         const {currentYear, currentMonth} = this.state;
         return new Date(currentYear, currentMonth +1, 0).getDate();
     }
-
 
     getPrevYear = () => {
         let {currentYear} = this.state;
@@ -160,9 +162,10 @@ class Calendar extends React.Component{
             const todayEvents = data.filter(meeting => {
                 return meeting.date === currentData;
             });
-            console.log(todayEvents);
+            // console.log(todayEvents);
             return todayEvents;
         }
+        return [];
     }
 
 
@@ -180,111 +183,56 @@ class Calendar extends React.Component{
 
     getPrevDay = () => {
         let {currentDay, currentMonth, currentYear} = this.state;
-        
-        currentDay--;
-        // console.log(currentDay, currentMonth)
-
+        console.log(currentMonth);
+        currentDay --;
         if(currentDay === 0) {
 
-            // console.log('test', currentYear);
-            
-            if(currentMonth === 0 || currentMonth === 3 || currentMonth === 5 || currentMonth === 7 || currentMonth === 8 || currentMonth === 10) {
+            if(currentMonth === 0 || currentMonth === 2 || currentMonth === 4 || currentMonth === 6 || currentMonth === 7 || currentMonth === 9 || currentMonth === 11) {
                 currentDay = 31;
-                console.log('zero')
-                this.setState({
-                    currentDay: currentDay,
-                })
             }
 
-            if(currentMonth === 2 || currentMonth === 4 || currentMonth === 6 || currentMonth === 9 || currentMonth === 11) {
-                // currentMonth --;
+            else if(currentMonth === 3 || currentMonth === 5 || currentMonth === 8 || currentMonth === 10) {
                 currentDay = 30;
-                this.setState({
-                    currentDay: currentDay,
-                })
+            }
+            else if (currentMonth === 1) {
+                if ((0 == currentYear % 4) && (0 != currentYear % 100) || (0 == currentYear % 400)) {
+                    currentDay=29;
+                } else {
+                    currentDay=28;
+                }
             }
 
-            // if(currentMonth === 1 && this.leapYear(currentYear)){
-            //     currentDay = 28;
-            //     this.setState({
-            //         currentDay: currentDay,
-            //     })
-            // }
-            // else if (currentMonth === 1){
-            //     console.log('test');
-            //     currentDay = 29;
-            //     this.setState({
-            //         currentDay: currentDay,
-            //     })
-            // }
-            currentMonth --;
-
-            if(currentMonth < 0) {
-                console.log(currentYear);
-                currentMonth = 11;  
-                currentYear--;
-        
-                this.setState({
-                    currentMonth: currentMonth,
-                    currentYear: currentYear,
-                })
-            }
-
-            this.setState({
-                currentMonth: currentMonth,
-                currentDay: currentDay,
-            })
         }
-        
-        else {
-            // console.log('luty');
-        }
-
         this.setState({
             currentDay: currentDay,
         })
+
     }
 
     getNextDay = () => {
         let {currentDay, currentMonth, currentYear} = this.state;
+        console.log(currentMonth);
+
         currentDay++;
-        
-        console.log(currentDay, currentMonth)
-        if(currentDay > 31 && currentMonth === 0 || currentMonth === 3 || currentMonth === 5 || currentMonth === 7 || currentMonth === 8 || currentMonth === 10 ) {
-            (console.log('jeden'))
-            currentMonth ++;    
+        if(currentDay === 32 && (currentMonth === 0 || currentMonth === 2 || currentMonth === 4 || currentMonth === 6 || currentMonth === 7 || currentMonth === 9 || currentMonth === 11)) {
             currentDay = 1;
-
-            this.setState({
-                currentMonth: currentMonth,
-                currentDay: currentDay,
-            })
         }
-        else if(currentDay === 31 && currentMonth === 2 || currentMonth === 4 || currentMonth === 6 || currentMonth === 9 || currentMonth === 11) {
-            console.log(currentMonth)
-            // currentMonth ++;
+
+        else if(currentDay === 31 && (currentMonth === 3 || currentMonth === 5 || currentMonth === 8 || currentMonth === 10)) {
             currentDay = 1;
-            if(currentMonth > 11) {
-                
-                console.log('tu');
-                currentMonth = 0;  
-                currentYear++;
-            //     console.log('dwa')
-                this.setState({
-                    currentMonth: currentMonth,
-                    currentYear: currentYear,
-                })
+        }
+
+        else if(currentMonth === 1) {
+            console.log('luty')
+            if (currentDay===30 && ((0 == currentYear % 4) && (0 != currentYear % 100) || (0 == currentYear % 400))) {
+                console.log('test')
+                currentDay=1;
+            } 
+            else if(currentDay===29 && !((0 == currentYear % 4) && (0 != currentYear % 100) || (0 == currentYear % 400))){
+                console.log('yhym')
+                currentDay=1;
             }
-
-
-            console.log('cztery')
-            // console.log(currentDay)
-            this.setState({
-                currentMonth: currentMonth,
-                currentDay: currentDay,
-            })
         }
-        console.log('trzy')
         
         this.setState({
             currentDay: currentDay,

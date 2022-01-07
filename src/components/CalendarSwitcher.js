@@ -2,7 +2,7 @@ import React from "react";
 
 function CalendarSwitcher(props) {
 
-    const {title, months, prevEvent, nextEvent} = props;
+    const {title, prevEvent, nextEvent} = props;
 
     return (
         <>

@@ -28,7 +28,7 @@ class CalendarForm extends React.Component {
                     <input type="submit" className="event__submit"></input>
                 </div>
                 <div className="div__error">
-                    {this.renderInformation}
+                    {this.renderInformation()}
                 </div>
             </form>
         )
@@ -74,7 +74,6 @@ class CalendarForm extends React.Component {
                     if(regexDate.test(date)) {
                         if(regexHour.test(time)) {
                             this.setNewMeetingData(event);
-                            event.preventDefault();
                         }
                         else {
                             event.preventDefault();
@@ -129,7 +128,7 @@ class CalendarForm extends React.Component {
             userEmail: '',
             date: '',
             time: '',
-            infoArray: ['You added new meeting'],
+            infoArray: ['New meeting added!'],
         });
 
         this.sendNewMeeting(newMeeting);
