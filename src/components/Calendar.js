@@ -1,11 +1,11 @@
 import React from "react";
-import {v4 as uuid} from 'uuid';
 
 import CalendarAPI from "./CalendarAPI";
 import CalendarForm from "./CalendarForm";
 import CalendarList from "./CalendarList";
 import CalendarWeekDays from "./CalendarWeekDays";
 import CalendarSwitcher from "./CalendarSwitcher";
+import CalendarDays from "./CalendarDays";
 
 class Calendar extends React.Component{
     constructor() {
@@ -37,7 +37,7 @@ class Calendar extends React.Component{
                     <CalendarWeekDays days={days}/>
                     <main className="main__calendar">
                         <div className="calendar__row">
-                            {this.renderDays()}
+                            <CalendarDays month={currentMonth} year={currentYear} meetings={data}/>
                         </div> 
                     </main>
                 </section>
@@ -68,35 +68,6 @@ class Calendar extends React.Component{
         this.setState({
             data: data,
         });
-    }
-
-    getDay() {
-        const {currentYear, currentMonth} = this.state;
-        const firstDay = new Date(currentYear, currentMonth, 1);
-        let num = firstDay.getDay();
-
-        if(num === 0) {
-            num = 7;
-        }
-        return num;
-    }
-
-    renderDays() {
-        const days = [];
-        const currentDay = this.getDay();
-
-        for (let i=1; i<currentDay; i++) {
-            days.push(<label key={uuid()} className="calendar__day"></label>)
-        }
-        for (let i=1; i<=this.getDaysInMonth(); i++) {
-            days.push(<label key={uuid()} className="calendar__day">{i}</label>)
-        }
-        return days;
-    }
-
-    getDaysInMonth() {
-        const {currentYear, currentMonth} = this.state;
-        return new Date(currentYear, currentMonth +1, 0).getDate();
     }
 
     getPrevYear = () => {
@@ -162,24 +133,10 @@ class Calendar extends React.Component{
             const todayEvents = data.filter(meeting => {
                 return meeting.date === currentData;
             });
-            // console.log(todayEvents);
             return todayEvents;
         }
         return [];
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     getPrevDay = () => {
         let {currentDay, currentMonth, currentYear} = this.state;
@@ -201,7 +158,6 @@ class Calendar extends React.Component{
                     currentDay=28;
                 }
             }
-
         }
         this.setState({
             currentDay: currentDay,
@@ -238,35 +194,6 @@ class Calendar extends React.Component{
             currentDay: currentDay,
         })
     }
-
-    // leapYear(year) {
-    //     return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
-    // }
-    
-    // console.log(data);
-    
-    // // console.log(currentYear, currentMonth, currentDay)
-    // // console.log(`${currentYear}-${currentMonth}-${currentDay}`);
-    // // const test = data.filter(item => item.date === `${currentYear}-${currentMonth}-${currentDay}`);
-    // // console.log(test);
-    
-    // // data.filter(item => item.data === `${}`)
-    // const string = 'abcdefg';
-    // console.log(string);
-    // const changed = string.slice(3,5);
-    // console.log(changed);
-    // const testChange = data.map((el) => {
-    //     
-    //     // if(el.date.charAt(5) === '0') {
-
-    //     // }
-    //     if(el.date.charAt(8) === '0') {
-    //         return el.date.replace(8, '');
-    //     }
-    //     console.log(el.date)
-    //     return el;
-    // })
-    // console.log(testChange);
 }
 
 export default Calendar;
