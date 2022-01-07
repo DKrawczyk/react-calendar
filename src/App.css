@@ -1,27 +1,36 @@
+
 .main {
-    outline: 1px solid;
+    /* outline: 1px solid; */
     display: flex;
     height: 100vh;
-    background: black;
+    background: lightgrey;
     align-items: center;
     justify-content: space-evenly;
 }
 
 .main__section {
-    background: white;
     max-width: 1400px;
     height: 75%;
-    width: 45%;
+    width: 40%;
+    border-radius: 30px;
+}
+
+.div__main {
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
 }
 
 .darker {
-    outline: 1px solid;
+    /* outline: 1px solid; */
+    background: #1E212D;
     height: 10%;
+    color: #FAF3E0;
 }
 
 .brighter {
     height: 20%;
-    outline: 1px solid;
+    background-color: #B68973;
+    /* outline: 1px solid; */
 }
 
 .darker, .brighter {
@@ -39,6 +48,8 @@
     align-items: center;
     justify-content: space-around;
     width: 100%;
+    font-size: 1.4rem;
+    text-transform: uppercase;
 }
 
 .calendar__row {
@@ -46,28 +57,41 @@
     height: 100%;
     display: flex;
     flex-wrap: wrap;
-    outline: 1px solid;
+    background-color: #FAF3E0;
+    color: #1E212D;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    /* outline: 1px solid; */
 }
 
 .calendar__day {
     width: calc(100%/7);
-    outline: 1px solid;
+    /* outline: 1px solid; */
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .form__event {
     height: 40%;
-    outline: 1px solid;
+    /* outline: 1px solid; */
     display: flex;
+    background-color: #FAF3E0;
 }
 
 .event__insert {
-    outline: 1px solid;
+    /* outline: 1px solid; */
     width: 60%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .div__error{
-    outline: 1px solid;
+    /* outline: 1px solid; */
     width: 40%;
     height: 100%;
 }
@@ -77,11 +101,53 @@
 }
 
 .div__informations {
-    outline: 1px solid;
+    /* outline: 1px solid; */
     height: 50%;
     width: 100%;
+    background-color: #FAF3E0;
 }
 
-.red {
+.curr {
     background-color: red;
+}
+
+.main__month {
+    font-size: 3rem;
+    text-transform: uppercase;
+}
+
+.main__year {
+    font-size: 1.6rem;
+}
+
+.empty {
+    cursor: default;
+}
+
+.button {
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin: 15px;
+    padding: 5px;
+}
+
+.button:hover {
+    transition: .2s;
+    color: #FAF3E0;
+}
+
+.not-empty{
+    transition: .4s;
+}
+
+.not-empty:hover {
+    transition: .2s;
+    color: #EABF9F;
+    font-weight: bolder;
+}
+
+.input__field [type=text]{
+    background-color: red;
+    height: 10%;
+    width: 70%;
 }

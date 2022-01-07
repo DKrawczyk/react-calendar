@@ -31,7 +31,7 @@ class Calendar extends React.Component{
                     <div className="div__main darker">
                         <CalendarSwitcher title="main__year" currYear={currentYear} currMonth={currentMonth} months={months} prevEvent={this.getPrevYear} nextEvent={this.getNextYear}/>
                     </div>
-                    <div className="div__main brighter">
+                    <div className="div__year brighter">
                         <CalendarSwitcher title="main__month" currYear={currentYear} currMonth={currentMonth} months={months} prevEvent={this.getPrevMonth} nextEvent={this.getNextMonth}/>
                     </div>
                     <CalendarWeekDays days={days}/>

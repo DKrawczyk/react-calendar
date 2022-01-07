@@ -6,9 +6,11 @@ function CalendarSwitcher(props) {
 
     return (
         <>
-            <button onClick={prevEvent} className="button button__previous">{'<'}</button>
+            {/* <button onClick={prevEvent} className="button button__previous">{'<'}</button> */}
+            <i onClick={prevEvent} class="fas fa-arrow-left button button__previous"></i>
             <span className={title}>{getDate()}</span>
-            <button onClick={nextEvent} className="button button__next">{'>'}</button>
+            <i onClick={nextEvent} class="fas fa-arrow-right button button__next"></i>
+            {/* <button onClick={nextEvent} className="button button__next">{'>'}</button> */}
         </>
     )
 

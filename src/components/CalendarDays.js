@@ -8,7 +8,7 @@ function CalendarDays(props) {
 
     // {test()}
     for (let i=1; i<currentDay; i++) {
-        days.push(<label key={uuid()} className="calendar__day"></label>)
+        days.push(<label key={uuid()} className="calendar__day empty"></label>)
     }
     for (let i=1; i<=getDaysInMonth(); i++) {
         days.push(<label key={uuid()} className={markCurrentDay(i)}>{i}</label>)
@@ -35,9 +35,9 @@ function CalendarDays(props) {
         const currentDay = getDay()+1;
 
         if(nums === currentDay) {
-            return 'red calendar__day';
+            return 'curr calendar__day';
         }
-        return 'calendar__day';
+        return 'calendar__day not-empty';
     }
 
     // function test() {
