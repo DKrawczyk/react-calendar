@@ -4,23 +4,23 @@
       "firstName": "Jan",
       "lastName": "Kowalski",
       "email": "jan@kowalski.not",
-      "date": "2022-1-8",
+      "date": "2022-1-10",
       "time": "10:00",
       "id": 1
     },
     {
-      "user": "Andrzej",
+      "firstName": "Andrzej",
       "lastName": "Kowalski",
       "email": "dawfagfaw@wp.pl",
-      "date": "2022-1-7",
+      "date": "2022-1-10",
       "time": "10:34",
       "id": 2
     },
     {
-      "user": "Andrzej",
+      "firstName": "Andrzej",
       "lastName": "Paździoch",
       "email": "htsfdtsrdt@u2.com",
-      "date": "2022-1-7",
+      "date": "2022-1-10",
       "time": "12:35",
       "id": 3
     }

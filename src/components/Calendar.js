@@ -42,7 +42,7 @@ class Calendar extends React.Component{
                     </main>
                 </section>
                 <section className="main__section">
-                    <header className="darker">
+                    <header className="darker main__calendar-page">
                         <CalendarSwitcher title="chosen__day" currYear={currentYear} currMonth={currentMonth} currDay={currentDay} months={months} prevEvent={this.getPrevDay} nextEvent={this.getNextDay}/>
                     </header>
                 <CalendarForm addData={this.addNewEvent}/>

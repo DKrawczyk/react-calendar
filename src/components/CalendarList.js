@@ -8,11 +8,11 @@ function CalendarList(props) {
         return list.map(meeting => {
             return (  
                 <li key={uuid()} className="event">
-                    <div>
-                        <h2>{meeting.user} {meeting.lastName}</h2>
+                    <div className="event__info event__data">
+                        <h2>{meeting.firstName} {meeting.lastName}</h2>
                         <h2>{meeting.email}</h2>
                     </div>
-                    <div>
+                    <div className="event__info event__date">
                         <h4>{meeting.time}</h4>
                         <h4>{meeting.date}</h4>
                     </div>
@@ -21,7 +21,7 @@ function CalendarList(props) {
         })
     }
 
-    return <h1> No meetings today</h1>
+    return <h1> No meetings in this day</h1>
 }
 
 export default CalendarList;

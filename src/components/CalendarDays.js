@@ -35,7 +35,7 @@ function CalendarDays(props) {
         const currentDay = getDay()+1;
 
         if(nums === currentDay) {
-            return 'curr calendar__day';
+            return 'curr calendar__day not-empty';
         }
         return 'calendar__day not-empty';
     }
