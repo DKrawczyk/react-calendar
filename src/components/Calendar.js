@@ -37,7 +37,7 @@ class Calendar extends React.Component{
                     <CalendarWeekDays days={days}/>
                     <main className="main__calendar">
                         <div className="calendar__row">
-                            <CalendarDays month={currentMonth} year={currentYear} meetings={data}/>
+                            <CalendarDays currYear={currentYear} currMonth={currentMonth} currDay={currentDay} meetings={data} chooseDayEvent={this.chooseTheDay}/>
                         </div> 
                     </main>
                 </section>
@@ -136,6 +136,16 @@ class Calendar extends React.Component{
             return todayEvents;
         }
         return [];
+    }
+
+    chooseTheDay = (day) => {
+        let {currentDay} = this.state;
+        let clickedDay = parseInt(day.innerText)
+        currentDay = clickedDay;
+        this.setState({
+            currentDay: currentDay,
+        })
+        console.log(clickedDay)
     }
 
     getPrevDay = () => {

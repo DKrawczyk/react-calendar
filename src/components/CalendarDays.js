@@ -2,22 +2,21 @@ import React from "react";
 import {v4 as uuid} from 'uuid';
 
 function CalendarDays(props) {
-
+    const {chooseDayEvent} = props;
     const days = [];
     const currentDay = getDay();
 
-    // {test()}
     for (let i=1; i<currentDay; i++) {
         days.push(<label key={uuid()} className="calendar__day empty"></label>)
     }
     for (let i=1; i<=getDaysInMonth(); i++) {
-        days.push(<label key={uuid()} className={markCurrentDay(i)}>{i}</label>)
+        days.push(<label onClick = {(e) => chooseDayEvent(e.target)} key={uuid()} className={markDays(i)}>{i}</label>)
     }
     return days;
 
     function getDay() {
-        const {year, month} = props;
-        const firstDay = new Date(year, month, 1);
+        const {currYear, currMonth} = props;
+        const firstDay = new Date(currYear, currMonth, 1);
         let num = firstDay.getDay();
 
         if(num === 0) {
@@ -27,81 +26,24 @@ function CalendarDays(props) {
     }
     
     function getDaysInMonth() {
-        const {year, month} = props;
-        return new Date(year, month +1, 0).getDate();
+        const {currYear, currMonth} = props;
+        return new Date(currYear, currMonth +1, 0).getDate();
     }
 
-    function markCurrentDay(nums) {
-        const currentDay = getDay()+1;
+    function markDays(days) {
+        const {currDay, currMonth, currYear} = props;
+        const defaultMonth = new Date().getMonth();
+        const defaultYear = new Date().getFullYear();
+        const defaultDay = new Date().getDate();
 
-        if(nums === currentDay) {
-            return 'curr calendar__day not-empty';
+        if(days === defaultDay && currMonth === defaultMonth && currYear === defaultYear) {
+            return 'todayDay calendar__day not-empty';
+        } 
+        else if(days === currDay) {
+            return 'chosenDay calendar__day not-empty'
         }
         return 'calendar__day not-empty';
     }
-
-    // function test() {
-        // const {meetings, month} = props;
-        // const currentDay = getDay();
-        // console.log(currentMonth)
-        // console.log(month);
-        // if(meetings.length > 0) {
-
-            // console.log(meetings);
-            // meetings.map(el => {
-            //     const test = year(el);
-            //     const test2 = setMonthDate(el);
-            //     const test3 = setDatDate(el);
-            //     console.log(test2);
-                // days();
-                
-                // console.log(test, test2, test3);
-            // })
-            // const test = setTest(meetings);
-
-            // const testv2 = meetings.map((el) => {
-
-            //     return parseInt(el.date.slice(5,7))
-            // })
-
-            // console.log(testv2);
-            // const newClass = testv2.map(el => {
-            //     if(el === nums) {
-            //         return 'circle'
-            //     }
-            // })
-
-            // return newClass
-
-            // if(nums === testv2) {
-                // console.log(nums, '|', testv2);
-                // console.log('jest');
-            // }
-            // console.log(nums, '|', testv2);
-
-        // return 'test'
-        // }
-    // }
-
-    // function year(el) {
-    //     console.log(el);
-
-    //     return el.date.slice(0,4);
-    // }
-
-    // function setMonthDate(el) {
-    //     return parseInt(el.date.slice(5,7));
-    // }
-
-    // function setDatDate(el) {
-    //     console.log(el.date.length);
-    //     return parseFloat(el.date.slice(7,10));
-    // }
-
-    // function setTest(array) {
-    //     console.log(array);
-
-    // }
 }
 
 export default CalendarDays;

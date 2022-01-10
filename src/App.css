@@ -122,8 +122,14 @@
     border-bottom-right-radius: 30px;
 }
 
-.curr {
-    /* background-color: red; */
+.todayDay {
+    border-radius: 30px;
+    border: 1px solid #B68973;
+}
+
+.chosenDay {
+    border-radius: 30px;
+    background-color: #B68973;
 }
 
 .main__month {
