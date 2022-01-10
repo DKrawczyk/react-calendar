@@ -94,7 +94,6 @@
     width: 40%;
     min-height: 100%;
     font-size: 0.9rem;
-    color: red;
 }
 
 .error__list {
@@ -108,6 +107,8 @@
 
 .error {
     margin: 10px 0;
+    color: #1E212D;
+    font-weight: 500;
 }
 
 .label {

@@ -13,6 +13,7 @@ git remote -v
 - wyrażenia regularne, regex
 - sprowadzenie odpowiedniej formy daty z formularza aby wyszukac aktywne spotkania
 - walidacja roku przestępnego
+- klucz uuid w celu optymalizacji
 
 
 - ulepszenie wyświetlenia daty

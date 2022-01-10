@@ -4,7 +4,7 @@ class CalendarAPI {
     }
 
     loadData() {
-        return this._fetch();
+        return this._fetch('');
     }
 
     uploadData(data) {
@@ -13,11 +13,15 @@ class CalendarAPI {
             body: JSON.stringify(data),
             headers: {'Content-Type': 'application/json'}
         }
-        return this._fetch(options);
+        return this._fetch('', options);
     }
 
-    _fetch(options) {
-        const url = this.apiUrl;
+    loadFilteredData(name, value) {
+        return this._fetch(`?${name}_like=${value}`);
+    }
+
+    _fetch(path, options) {
+        const url = this.apiUrl + path;
         return fetch(url, options)
             .then(resp => {
                 if(resp.ok) {

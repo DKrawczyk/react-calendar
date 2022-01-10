@@ -1,5 +1,7 @@
 import React from "react";
 import CalendarAPI from "./CalendarAPI";
+import {v4 as uuid} from 'uuid';
+
 
 class CalendarForm extends React.Component {
     constructor(){
@@ -7,22 +9,22 @@ class CalendarForm extends React.Component {
         this.api = new CalendarAPI();
     }
     state = {
-            userName: '',
-            userLastName: '',
-            userEmail: '',
+            firstName: '',
+            lastName: '',
+            email: '',
             date: '',
             time: '',
             infoArray: [],
     }
 
     render() {
-        const {userName, userLastName, userEmail, date, time} = this.state;
+        const {firstName, lastName, email, date, time} = this.state;
         return (
-            <form onSubmit = {this.dataValidation} className="form__event">
-                <div onChange = {this.inputChange} className="event__insert">
-                    <input type="text" name="userName" value={userName} placeholder="First name" className="input__field" id="clicked"></input> 
-                    <input type="text" name="userLastName" value={userLastName} placeholder="Last Name" className="input__field" id="clicked"></input>
-                    <input type="text" name="userEmail" value={userEmail} placeholder="Email" className="input__field" id="clicked"></input>
+            <form onSubmit={this.dataValidation} className="form__event">
+                <div onChange={this.inputChange} className="event__insert">
+                    <input type="text" name="firstName" value={firstName} placeholder="First name" className="input__field" id="clicked"></input> 
+                    <input type="text" name="lastName" value={lastName} placeholder="Last Name" className="input__field" id="clicked"></input>
+                    <input type="text" name="email" value={email} placeholder="Email" className="input__field" id="clicked"></input>
                     <input type="date" name="date" value={date} placeholder="Date" className="input__field" id="clicked"></input>
                     <input type="time" name="time" value={time} placeholder="Time" className="input__field" id="clicked"></input>
                     <input type="submit" className="event__submit"></input>
@@ -38,6 +40,7 @@ class CalendarForm extends React.Component {
 
     inputChange = e => {
         const {name, value} = e.target;
+        this.test(name, value);
         this.setState( {
             [name]: value,
         });
@@ -54,23 +57,23 @@ class CalendarForm extends React.Component {
         else{
             return infoArray.map(message =>{
                 return ( 
-                    <li className="error">{message}</li>
+                    <li key={uuid()} className="error">{message}</li>
                 )
             })
         }
     }
 //refactoring
     dataValidation = (event) => {
-        const {userName, userLastName, userEmail, date, time, infoArray} = this.state;
+        const {firstName, lastName, email, date, time, infoArray} = this.state;
 
         const regexNameAndLastName = /^[\w'\-,.][^0-9_!¡?÷?¿\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/;
         const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         const regexDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/
         const regexHour = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
 
-        if(userName.length >=2 && userLastName.length >=2 && userEmail.length >=2 && date.length >=2 && time.length >=2) {
-            if(regexNameAndLastName.test(userName) && regexNameAndLastName.test(userLastName)) {
-                if(regexEmail.test(userEmail)) {
+        if(firstName.length >=2 && lastName.length >=2 && email.length >=2 && date.length >=2 && time.length >=2) {
+            if(regexNameAndLastName.test(firstName) && regexNameAndLastName.test(lastName)) {
+                if(regexEmail.test(email)) {
                     if(regexDate.test(date)) {
                         if(regexHour.test(time)) {
                             event.preventDefault();
@@ -113,20 +116,19 @@ class CalendarForm extends React.Component {
     }
 
     setNewMeetingData() {
-        const {userName, userLastName, userEmail, date, time, infoArray} = this.state;
-
+        const {firstName, lastName, email, date, time, infoArray} = this.state;
         const newMeeting = {
-            firstName: userName,
-            lastName: userLastName,
-            email: userEmail,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
             date: this.setCorrectDate(date),
             time: time,
         }
 
         this.setState({
-            userName: '',
-            userLastName: '',
-            userEmail: '',
+            firstName: '',
+            lastName: '',
+            email: '',
             date: '',
             time: '',
             infoArray: ['New meeting added!'],
@@ -165,6 +167,13 @@ class CalendarForm extends React.Component {
             .then(resp => addData(resp))
             .catch(err => console.log(err.message))
             .finally('New meeting uploaded');
+    }
+
+    test(name, value) {
+        console.log(name, '|', value)
+        return this.api.loadFilteredData(name, value)
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
     }
 }
 

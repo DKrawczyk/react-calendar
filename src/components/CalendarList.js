@@ -21,7 +21,7 @@ function CalendarList(props) {
         })
     }
 
-    return <h1> No meetings in this day</h1>
+    return <h1>No meetings in this day</h1>
 }
 
 export default CalendarList;

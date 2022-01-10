@@ -24,7 +24,7 @@ class Calendar extends React.Component{
 
     render() {
         const {data, currentDay, currentYear, currentMonth, months, days} = this.state;
-        console.log(currentYear, currentMonth, currentDay);
+        // console.log(currentYear, currentMonth, currentDay);
         return(
             <main className="main container">
                 <section className="main__section">
@@ -145,12 +145,10 @@ class Calendar extends React.Component{
         this.setState({
             currentDay: currentDay,
         })
-        console.log(clickedDay)
     }
 
     getPrevDay = () => {
         let {currentDay, currentMonth, currentYear} = this.state;
-        console.log(currentMonth);
         currentDay --;
         if(currentDay === 0) {
 
@@ -177,7 +175,6 @@ class Calendar extends React.Component{
 
     getNextDay = () => {
         let {currentDay, currentMonth, currentYear} = this.state;
-        console.log(currentMonth);
 
         currentDay++;
         if(currentDay === 32 && (currentMonth === 0 || currentMonth === 2 || currentMonth === 4 || currentMonth === 6 || currentMonth === 7 || currentMonth === 9 || currentMonth === 11)) {
@@ -189,13 +186,10 @@ class Calendar extends React.Component{
         }
 
         else if(currentMonth === 1) {
-            console.log('luty')
             if (currentDay===30 && ((0 == currentYear % 4) && (0 != currentYear % 100) || (0 == currentYear % 400))) {
-                console.log('test')
                 currentDay=1;
             } 
             else if(currentDay===29 && !((0 == currentYear % 4) && (0 != currentYear % 100) || (0 == currentYear % 400))){
-                console.log('yhym')
                 currentDay=1;
             }
         }
