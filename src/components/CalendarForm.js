@@ -1,6 +1,7 @@
 import React from "react";
 import CalendarAPI from "./CalendarAPI";
 import {v4 as uuid} from 'uuid';
+import CalendarFormValidate from "./CalendarFormValidate";
 
 
 class CalendarForm extends React.Component {
@@ -40,7 +41,7 @@ class CalendarForm extends React.Component {
 
     inputChange = e => {
         const {name, value} = e.target;
-        this.test(name, value);
+        this.renderFilteredData(name, value);
         this.setState( {
             [name]: value,
         });
@@ -65,17 +66,18 @@ class CalendarForm extends React.Component {
 //refactoring
     dataValidation = (event) => {
         const {firstName, lastName, email, date, time, infoArray} = this.state;
-
+        const validation = new CalendarFormValidate();
+ 
         const regexNameAndLastName = /^[\w'\-,.][^0-9_!¡?÷?¿\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/;
         const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         const regexDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/
         const regexHour = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
 
-        if(firstName.length >=2 && lastName.length >=2 && email.length >=2 && date.length >=2 && time.length >=2) {
-            if(regexNameAndLastName.test(firstName) && regexNameAndLastName.test(lastName)) {
-                if(regexEmail.test(email)) {
-                    if(regexDate.test(date)) {
-                        if(regexHour.test(time)) {
+        if(validation.isNotEmpty(firstName, lastName, email, date, time)) {
+            if(validation.isNameAndSurnameCorrect(firstName, lastName, regexNameAndLastName)) {
+                if(validation.correctnessOfDatas(regexEmail, email)) {
+                    if(validation.correctnessOfDatas(regexDate, date)) {
+                        if(validation.correctnessOfDatas(regexHour, time)) {
                             event.preventDefault();
                             this.setNewMeetingData(event);
                         }
@@ -169,8 +171,8 @@ class CalendarForm extends React.Component {
             .finally('New meeting uploaded');
     }
 
-    test(name, value) {
-        console.log(name, '|', value)
+    renderFilteredData(name, value) {
+        // console.log(name, '|', value)
         return this.api.loadFilteredData(name, value)
             .then(data => console.log(data))
             .catch(err => console.log(err))
