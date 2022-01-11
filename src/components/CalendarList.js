@@ -2,10 +2,9 @@ import React from "react";
 import {v4 as uuid} from 'uuid';
 
 function CalendarList(props) {
-    const {list} = props;
-
-    if(list.length > 0 ) {
-        return list.map(meeting => {
+    const {meetingList} = props;
+    if(meetingList.length > 0 ) {
+        return meetingList.map(meeting => {
             return (  
                 <li key={uuid()} className="event">
                     <div className="event__info event__data">
@@ -20,7 +19,6 @@ function CalendarList(props) {
             )
         })
     }
-
     return <h1>No meetings in this day</h1>
 }
 

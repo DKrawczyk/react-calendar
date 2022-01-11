@@ -160,10 +160,6 @@
     color: #FAF3E0;
 }
 
-.not-empty{
-    transition: .4s;
-}
-
 .not-empty:hover {
     transition: .2s;
     color: #EABF9F;
@@ -181,13 +177,13 @@
     transition: .3s;
     text-transform: uppercase;
     font-size: 0.65rem;
+    border-radius: 10px;
 }
 
 .input__field[type=text] {
     min-height: 12%;
-    width: 70%;
+    width: 100%;
     font-weight: 800;
-    border-radius: 10px;
     text-indent: 20px;
     color: #1E212D;
 }
@@ -195,15 +191,13 @@
 .input__field[type=date], .input__field[type=time] {
     text-align: center;
     min-height: 10%;
-    width: 50%;
+    width: 100%;
     font-weight: 500;
-    border-radius: 5px;
     color: #1E212D;
     cursor: pointer;
 }
 
 .input__field[type=time] {
-    width: 30%;
     min-height: 8%;
 }
 
@@ -222,7 +216,6 @@ input[type=submit] {
     border-radius: 10px;
     color: #FAF3E0;
     font-size: 0.8rem;
-    width: 20%;
 }
 
 .event {
@@ -259,4 +252,24 @@ input[type=submit] {
     text-align: center;
     font-weight: 500;
     font-size: 1.5rem;
+}
+
+.input__container--text, .input__container--date, .input__container--time {
+    display: flex;
+    justify-content: center;
+}
+
+.input__container--text {
+    min-height: 12%;
+    width: 70%;
+}
+
+.input__container--date {
+    min-height: 10%;
+    width: 50%;
+}
+
+.input__container--time{
+    min-height: 8%;
+    width: 30%;
 }

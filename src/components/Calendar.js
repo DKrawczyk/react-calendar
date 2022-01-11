@@ -1,133 +1,102 @@
 import React from "react";
 
 import CalendarAPI from "./CalendarAPI";
-import CalendarForm from "./CalendarForm";
-import CalendarList from "./CalendarList";
-import CalendarWeekDays from "./CalendarWeekDays";
-import CalendarSwitcher from "./CalendarSwitcher";
-import CalendarDays from "./CalendarDays";
+import DaysNaming from "../DaysNaming";
+import CalendarLeftSection from "./CalendarLeftSection";
+import CalendarRightSection from "./CalendarRightSection";
 
 class Calendar extends React.Component{
     constructor() {
         super() 
         this.api = new CalendarAPI();
-    }
-
-    state = {
-        data:[],
-        currentDay: new Date().getDate(),
-        currentYear: new Date().getFullYear(),
-        currentMonth: new Date().getMonth(),
-        days:['Pn', 'Wt', 'Sr', 'Czw', 'Pt', 'Sb', 'Nd'],
-        months:['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
+        this.language = new DaysNaming();
+        this.lang = 'pl';
+        this.state = {
+            data:[],
+            currentDay: new Date().getDate(),
+            currentYear: new Date().getFullYear(),
+            currentMonth: new Date().getMonth(),
+            days: this.language.days(this.lang),
+            months: this.language.months(this.lang),
+        }
     }
 
     render() {
-        const {data, currentDay, currentYear, currentMonth, months, days} = this.state;
-        // console.log(currentYear, currentMonth, currentDay);
+        const {currentDay, currentYear, currentMonth, months, days} = this.state;
+        
         return(
             <main className="main container">
-                <section className="main__section">
-                    <div className="div__main darker">
-                        <CalendarSwitcher title="main__year" currYear={currentYear} currMonth={currentMonth} months={months} prevEvent={this.getPrevYear} nextEvent={this.getNextYear}/>
-                    </div>
-                    <div className="div__year brighter">
-                        <CalendarSwitcher title="main__month" currYear={currentYear} currMonth={currentMonth} months={months} prevEvent={this.getPrevMonth} nextEvent={this.getNextMonth}/>
-                    </div>
-                    <CalendarWeekDays days={days}/>
-                    <main className="main__calendar">
-                        <div className="calendar__row">
-                            <CalendarDays currYear={currentYear} currMonth={currentMonth} currDay={currentDay} meetings={data} chooseDayEvent={this.chooseTheDay}/>
-                        </div> 
-                    </main>
-                </section>
-                <section className="main__section">
-                    <header className="darker main__calendar-page">
-                        <CalendarSwitcher title="chosen__day" currYear={currentYear} currMonth={currentMonth} currDay={currentDay} months={months} prevEvent={this.getPrevDay} nextEvent={this.getNextDay}/>
-                    </header>
-                <CalendarForm addData={this.addNewEvent}/>
-                <div className="div__informations">
-                    <ul className="events__list">
-                        <CalendarList list={this.findMeetings()} months={months}/>
-                    </ul>
-                </div>    
-                </section>
+                <CalendarLeftSection currentYear={currentYear} currentMonth={currentMonth} currentDay={currentDay} months={months} days={days} changeCurrentYear={this.setStateForYear} changeCurrentMonth={this.setStateForMonths} dayChoosing={this.chooseTheDay}/>
+                <CalendarRightSection currentYear={currentYear} currentMonth={currentMonth} currentDay={currentDay} months={months} changeCurrentDay={this.setStateForDays} newMeeting={this.addNewEvent} showMeetingList={this.findMeetings()}/>
             </main>
-
         )
     }
 
     componentDidMount() {
         return this.api.loadData()
-            .then(data => this.getData(data))
+            .then(data => this.setData(data))
             .catch(err => console.log(err.message))
             .finally(console.log('Data uploaded'))
     }
 
-    getData(data) {
+    setData(data) {
         this.setState({
             data: data,
         });
     }
 
-    getPrevYear = () => {
-        let {currentYear} = this.state;
-        currentYear--;
+    //     OD TĄD
 
+    setStateForYear = (yearValue) => {
         this.setState({
-            currentYear: currentYear,
-        })
-    }
-    
-    getNextYear = () => {
-        let {currentYear} = this.state;
-        currentYear++;
-
-        this.setState({
-            currentYear: currentYear,
-        })
+            currentYear: yearValue,
+        });
     }
 
-    getPrevMonth = () => {
-        let {currentMonth, currentYear} = this.state;
-        currentMonth--;
-
-        if(currentMonth < 0) {
-            currentMonth = 11;
-            currentYear--;
-        }
-
+    setStateForMonths = (yearValue, monthValue) => {
         this.setState({
-            currentMonth: currentMonth,
-            currentYear: currentYear,
+            currentMonth: monthValue,
+            currentYear: yearValue,
+        });
+    }
+
+    setStateForDays = (dayValue) => {
+        this.setState({
+            currentDay: dayValue,
         })
     }
 
-    getNextMonth = () => {
-        let {currentMonth, currentYear} = this.state;
-        currentMonth++;
-
-        if(currentMonth > 11) {
-            currentMonth = 0;
-            currentYear++;
-        }
-
+    chooseTheDay = (day) => {
+        let {currentDay} = this.state;
+        let clickedDay = parseInt(day.innerText)
+        currentDay = clickedDay;
         this.setState({
-            currentMonth: currentMonth,
-            currentYear: currentYear,
+            currentDay: currentDay,
         })
+    }
+
+    setStateForYear = (yearValue) => {
+        this.setState({
+            currentYear: yearValue,
+        });
+    }
+
+    setStateForMonths = (yearValue, monthValue) => {
+        this.setState({
+            currentMonth: monthValue,
+            currentYear: yearValue,
+        });
     }
 
     addNewEvent = (newMeeting) => {
         const {data} = this.state;
         this.setState({
             data:[...data, newMeeting]
-        })
+        });
     }
 
     findMeetings = () => {
         const {data, currentDay, currentYear, currentMonth} = this.state;
-        
         if(data.length > 0) {
             const currentData = `${currentYear}-${currentMonth+1}-${currentDay}`;
             const todayEvents = data.filter(meeting => {
@@ -147,57 +116,7 @@ class Calendar extends React.Component{
         })
     }
 
-    getPrevDay = () => {
-        let {currentDay, currentMonth, currentYear} = this.state;
-        currentDay --;
-        if(currentDay === 0) {
-
-            if(currentMonth === 0 || currentMonth === 2 || currentMonth === 4 || currentMonth === 6 || currentMonth === 7 || currentMonth === 9 || currentMonth === 11) {
-                currentDay = 31;
-            }
-
-            else if(currentMonth === 3 || currentMonth === 5 || currentMonth === 8 || currentMonth === 10) {
-                currentDay = 30;
-            }
-            else if (currentMonth === 1) {
-                if ((0 == currentYear % 4) && (0 != currentYear % 100) || (0 == currentYear % 400)) {
-                    currentDay=29;
-                } else {
-                    currentDay=28;
-                }
-            }
-        }
-        this.setState({
-            currentDay: currentDay,
-        })
-
-    }
-
-    getNextDay = () => {
-        let {currentDay, currentMonth, currentYear} = this.state;
-
-        currentDay++;
-        if(currentDay === 32 && (currentMonth === 0 || currentMonth === 2 || currentMonth === 4 || currentMonth === 6 || currentMonth === 7 || currentMonth === 9 || currentMonth === 11)) {
-            currentDay = 1;
-        }
-
-        else if(currentDay === 31 && (currentMonth === 3 || currentMonth === 5 || currentMonth === 8 || currentMonth === 10)) {
-            currentDay = 1;
-        }
-
-        else if(currentMonth === 1) {
-            if (currentDay===30 && ((0 == currentYear % 4) && (0 != currentYear % 100) || (0 == currentYear % 400))) {
-                currentDay=1;
-            } 
-            else if(currentDay===29 && !((0 == currentYear % 4) && (0 != currentYear % 100) || (0 == currentYear % 400))){
-                currentDay=1;
-            }
-        }
-        
-        this.setState({
-            currentDay: currentDay,
-        })
-    }
+//      DOTĄD
 }
 
 export default Calendar;

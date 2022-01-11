@@ -19,6 +19,26 @@ git remote -v
 - ulepszenie wyświetlenia daty
 - zaznaczanie dni gdzie są wydarzenia 
 
+
+Zamiast 
+        if(currentMonth === 0 || currentMonth === 2 || currentMonth === 4 || currentMonth === 6 || currentMonth === 7 || currentMonth === 9 || currentMonth === 11) {
+                currentDay = 31;
+            }
+
+            else if(currentMonth === 3 || currentMonth === 5 || currentMonth === 8 || currentMonth === 10) {
+                currentDay = 30;
+            }
+            else if (currentMonth === 1) {
+                if ((0 == currentYear % 4) && (0 != currentYear % 100) || (0 == currentYear % 400)) {
+                    currentDay=29;
+                } else {
+                    currentDay=28;
+                }
+            }
+
+
+
+
 Błąd Error: Objects are not valid as a React child (found: [object Promise]). If you meant to render a collection of children, use an array instead.
 
 Spowodowany połączeniem z API w render. Po połączeniu w component did mount problem znikł, po przeczytaniu infomracji na forum

@@ -1,8 +1,7 @@
 import React from "react";
 import CalendarAPI from "./CalendarAPI";
-import {v4 as uuid} from 'uuid';
 import CalendarFormValidate from "./CalendarFormValidate";
-
+import CalendarFormInputs from "./CalendarFormInputs";
 
 class CalendarForm extends React.Component {
     constructor(){
@@ -23,12 +22,7 @@ class CalendarForm extends React.Component {
         return (
             <form onSubmit={this.dataValidation} className="form__event">
                 <div onChange={this.inputChange} className="event__insert">
-                    <input type="text" name="firstName" value={firstName} placeholder="First name" className="input__field" id="clicked"></input> 
-                    <input type="text" name="lastName" value={lastName} placeholder="Last Name" className="input__field" id="clicked"></input>
-                    <input type="text" name="email" value={email} placeholder="Email" className="input__field" id="clicked"></input>
-                    <input type="date" name="date" value={date} placeholder="Date" className="input__field" id="clicked"></input>
-                    <input type="time" name="time" value={time} placeholder="Time" className="input__field" id="clicked"></input>
-                    <input type="submit" className="event__submit"></input>
+                    <CalendarFormInputs firstName={firstName} lastName={lastName} email={email} date={date} time={time}/>
                 </div>
                 <div className="div__error">
                     <ul className="error__list">
@@ -38,6 +32,7 @@ class CalendarForm extends React.Component {
             </form>
         )
     }
+
 
     inputChange = e => {
         const {name, value} = e.target;
@@ -49,71 +44,66 @@ class CalendarForm extends React.Component {
 
     renderInformation() {
         const {infoArray} = this.state;
-
         if(infoArray.length === 0) {
             return(
                 <h1>Please, insert your meeting</h1>
             )
         }
         else{
-            return infoArray.map(message =>{
+            return infoArray.map((message, ind) =>{
                 return ( 
-                    <li key={uuid()} className="error">{message}</li>
+                    <li key={ind} className="error">{message}</li>
                 )
             })
         }
     }
-//refactoring
+
     dataValidation = (event) => {
-        const {firstName, lastName, email, date, time, infoArray} = this.state;
         const validation = new CalendarFormValidate();
  
         const regexNameAndLastName = /^[\w'\-,.][^0-9_!¡?÷?¿\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/;
         const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         const regexDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/
-        const regexHour = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+        const regexTime = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+        
+        const errors = [];
+        const fields = [
+            {name: 'firstName', isRequired: true, regex: regexNameAndLastName},
+            {name: 'lastName', isRequired: true, regex: regexNameAndLastName},
+            {name: 'email', isRequired: true, regex: regexEmail},
+            {name: 'date', isRequired: true, regex: regexDate},
+            {name: 'time', isRequired: true, regex: regexTime},
+        ];
 
-        if(validation.isNotEmpty(firstName, lastName, email, date, time)) {
-            if(validation.isNameAndSurnameCorrect(firstName, lastName, regexNameAndLastName)) {
-                if(validation.correctnessOfDatas(regexEmail, email)) {
-                    if(validation.correctnessOfDatas(regexDate, date)) {
-                        if(validation.correctnessOfDatas(regexHour, time)) {
-                            event.preventDefault();
-                            this.setNewMeetingData(event);
-                        }
-                        else {
-                            event.preventDefault();
-                            this.setState({
-                                infoArray:[...infoArray, 'Time is incorrect'],
-                            })
-                        }
-                    }
-                    else {
-                        event.preventDefault();
-                        this.setState({
-                            infoArray:[...infoArray, 'Date is incorrect'],
-                        })
-                    }
+        fields.forEach(field => {
+            const value = this.state[field.name];
+
+            if(field.isRequired) {
+
+                if(validation.isEmpty(value)) {
+                    errors.push('Fields cannot be empty');
                 }
+
                 else {
-                    event.preventDefault();
-                    this.setState({
-                        infoArray:[...infoArray, 'Email is incorrect'],
-                    })
+
+                    if(field.regex) {
+
+                        if(!validation.checkDataCorrectness(field.regex, value)) {
+                            errors.push('Incorrect format');
+                        }
+                    }
                 }
             }
-            else {
-                event.preventDefault();
-                this.setState({
-                    infoArray:[...infoArray, 'Name or surname is incorrect'],
-                })
-            }
-        }
-        else {
+        });
+
+        if(errors.length > 0) {
             event.preventDefault();
             this.setState({
-                infoArray:[...infoArray, 'Fields cannot be empty'],
+                infoArray: errors,
             });
+        }
+        else {
+            this.setNewMeetingData();
         }
     }
 

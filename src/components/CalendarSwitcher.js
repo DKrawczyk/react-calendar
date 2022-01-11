@@ -2,31 +2,31 @@ import React from "react";
 
 function CalendarSwitcher(props) {
 
-    const {title, prevEvent, nextEvent} = props;
+    const {title, switchPrev, switchNext} = props;
 
     return (
         <>
-            <i onClick={prevEvent} className="fas fa-arrow-left button button__previous"></i>
-            <span className={title}>{getDate()}</span>
-            <i onClick={nextEvent} className="fas fa-arrow-right button button__next"></i>
+            <i onClick={switchPrev} className="fas fa-arrow-left button button__previous"></i>
+            <span className={title}>{setDate()}</span>
+            <i onClick={switchNext} className="fas fa-arrow-right button button__next"></i>
         </>
     )
 
-    function getDate() {
-        const {title, months, currYear, currMonth, currDay} = props;
-        const currentDay = `${currDay} ${months[currMonth]} ${currYear}`;
+    function setDate() {
+        const {title, monthsArray, year, month, day} = props;
+        const currentDay = `${day} ${monthsArray[month]} ${year}`;
 
         if (title === 'main__year') {
-            return currYear;
+            return year;
         }
         else if (title === 'main__month') {
-            return months[currMonth];
+            return monthsArray[month];
         }
         else if (title === 'chosen__day') {
             return currentDay;
         }
+        return false;
     }
-
 }
 
 
