@@ -1,5 +1,5 @@
 import React from "react";
-import {getDaysInMonth as getDays} from "../dateHelper";
+import {getDaysInMonth as getDays} from "../helpers/dateHelper";
 
 function CalendarDays(props) {
     const {chooseDayEvent} = props;

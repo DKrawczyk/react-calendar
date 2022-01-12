@@ -1,5 +1,5 @@
 import CalendarSwitcher from "./CalendarSwitcher";
-import {getDaysInMonth as getDays} from "../dateHelper";
+import {getDaysInMonth as getDays} from "../helpers/dateHelper";
 
 function CalendarMonthsSwitcher(props) {
     

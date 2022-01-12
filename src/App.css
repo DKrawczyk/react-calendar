@@ -210,7 +210,7 @@
 }
 
 input[type=submit] {
-    min-height: 8%;
+    min-height: 100%;
     border: none;
     background: #1E212D;
     border-radius: 10px;
@@ -272,4 +272,13 @@ input[type=submit] {
 .input__container--time{
     min-height: 8%;
     width: 30%;
+}
+
+.input__container--time{
+    min-height: 8%;
+    width: 30%;
+}
+
+.input__container--submit{
+    min-height: 8%;
 }

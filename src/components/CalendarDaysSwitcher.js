@@ -1,5 +1,5 @@
 import CalendarSwitcher from "./CalendarSwitcher";
-import {getDaysInMonth} from "../dateHelper";
+import {getDaysInMonth} from "../helpers/dateHelper";
 
 function CalendarDaysSwitcher(props) {
     const {setYear, setMonth, setDay, months} = props;

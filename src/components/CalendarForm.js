@@ -2,11 +2,20 @@ import React from "react";
 import CalendarAPI from "./CalendarAPI";
 import CalendarFormValidate from "./CalendarFormValidate";
 import CalendarFormInputs from "./CalendarFormInputs";
+import {getNameRegex, getEmailRegex, getDateRegex, getTimeRegex} from "../helpers/validationHelper";
 
 class CalendarForm extends React.Component {
     constructor(){
         super()
         this.api = new CalendarAPI();
+        this.fields = [
+            {type:"text", name:"firstName", placeholder:"First name", className:"input__field", id:"clicked", validationRules:{isRequired: true, regex: getNameRegex()}},
+            {type:"text", name:"lastName", placeholder:"Last Name", className:"input__field", id:"clicked", validationRules:{isRequired: true, regex: getNameRegex()}},
+            {type:"text", name:"email", placeholder:"Email", className:"input__field", id:"clicked", validationRules:{isRequired: true, regex: getEmailRegex()}},
+            {type:"date", name:"date", placeholder:"Date", className:"input__field", id:"clicked", validationRules:{isRequired: true, regex: getDateRegex()}},
+            {type:"time", name:"time", placeholder:"Time", className:"input__field", id:"clicked", validationRules:{isRequired: true, regex: getTimeRegex()}},
+            {type:"submit", className:"input__field", validationRules:{isRequired: false}},
+        ]
     }
     state = {
             firstName: '',
@@ -14,25 +23,19 @@ class CalendarForm extends React.Component {
             email: '',
             date: '',
             time: '',
-            infoArray: [],
+            errorInformations: {},
     }
 
     render() {
-        const {firstName, lastName, email, date, time} = this.state;
+        const {firstName, lastName, email, date, time, errorInformations} = this.state;
         return (
             <form onSubmit={this.dataValidation} className="form__event">
                 <div onChange={this.inputChange} className="event__insert">
-                    <CalendarFormInputs firstName={firstName} lastName={lastName} email={email} date={date} time={time}/>
-                </div>
-                <div className="div__error">
-                    <ul className="error__list">
-                        {this.renderInformation()}
-                    </ul>
+                    <CalendarFormInputs fields={this.fields} errors={errorInformations} thisEvent={this.secondTest}/>
                 </div>
             </form>
         )
     }
-
 
     inputChange = e => {
         const {name, value} = e.target;
@@ -42,51 +45,24 @@ class CalendarForm extends React.Component {
         });
     }
 
-    renderInformation() {
-        const {infoArray} = this.state;
-        if(infoArray.length === 0) {
-            return(
-                <h1>Please, insert your meeting</h1>
-            )
-        }
-        else{
-            return infoArray.map((message, ind) =>{
-                return ( 
-                    <li key={ind} className="error">{message}</li>
-                )
-            })
-        }
-    }
-
     dataValidation = (event) => {
         const validation = new CalendarFormValidate();
- 
-        const regexName = /^[\w'\-,.][^0-9_!¡?÷?¿\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/;
-        const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        const regexDate = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/
-        const regexTime = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
-        
-        const errors = [];
-        const fields = [
-            {name: 'firstName', isRequired: true, regex: regexName},
-            {name: 'lastName', isRequired: true, regex: regexName},
-            {name: 'email', isRequired: true, regex: regexEmail},
-            {name: 'date', isRequired: true, regex: regexDate},
-            {name: 'time', isRequired: true, regex: regexTime},
-        ];
+        const errors = {};
+        // event.preventDefault();
+        this.fields.forEach(field => {
+            errors[field.name] = [];
+        })
 
-        fields.forEach(field => {
+        this.fields.forEach(field => {
             const value = this.state[field.name];
-
-            if(field.isRequired) {
+            if(field.validationRules.isRequired) {
                 if(validation.isEmpty(value)) {
-                    errors.push('Fields cannot be empty');
+                    return errors[field.name].push('Fields cannot be empty');
                 }
-
                 else {
-                    if(field.regex) {
+                    if(field.validationRules.regex) {
                         if(!validation.checkDataCorrectness(field.regex, value)) {
-                            errors.push('Incorrect format');
+                            return errors[field.name].push('Incorrect format');
                         }
                     }
                 }
@@ -94,18 +70,26 @@ class CalendarForm extends React.Component {
         });
 
         if(errors.length > 0) {
-            event.preventDefault();
-            this.setState({
-                infoArray: errors,
-            });
+            // event.preventDefault();
+
+            // this.setState({
+            //     errorInformations: errors,
+            // });
         }
-        else {
-            this.setNewMeetingData();
-        }
+        // else {
+            // this.setNewMeetingData();
+        // }
+
+    }
+
+    secondTest(el) {
+        const {firstName, lastName, email, date, time, errorInformations} = this.state;
+
+        return errorInformations[el.name].map(i => <li>{i}</li>)
     }
 
     setNewMeetingData() {
-        const {firstName, lastName, email, date, time, infoArray} = this.state;
+        const {firstName, lastName, email, date, time, errorInformations} = this.state;
         const newMeeting = {
             firstName: firstName,
             lastName: lastName,
@@ -120,10 +104,10 @@ class CalendarForm extends React.Component {
             email: '',
             date: '',
             time: '',
-            infoArray: ['New meeting added!'],
+            // errorInformations: ['New meeting added!'],
         });
-
-        this.sendNewMeeting(newMeeting);
+        console.log(errorInformations);
+        // this.sendNewMeeting(newMeeting);
     }
 
     setCorrectDate(date) {
