@@ -1,4 +1,5 @@
 import CalendarSwitcher from "./CalendarSwitcher";
+import {getDaysInMonth as getDays} from "../dateHelper";
 
 function CalendarMonthsSwitcher(props) {
     
@@ -10,26 +11,31 @@ function CalendarMonthsSwitcher(props) {
     )
 
     function setNextMonth() {
-        let {switchEvent, setMonth, setYear} = props;
+        let {switchEvent, setMonth, setYear, setDay} = props;
         setMonth++;
 
+        const maxDayInMonth = getDays(setYear, setMonth);
+        if(setDay > maxDayInMonth) {
+            setDay = maxDayInMonth;
+        }
+        
         if(setMonth > 11) {
             setMonth = 0;
             setYear++;
         }
 
-        switchEvent(setYear, setMonth);
+        switchEvent(setYear, setMonth, setDay);
     }
 
     function setPrevMonth() {
-        let {switchEvent, setMonth, setYear} = props;
+        let {switchEvent, setMonth, setYear, setDay} = props;
         setMonth--;
 
         if(setMonth < 0) {
             setMonth = 11;
             setYear--;
         }
-        switchEvent(setYear, setMonth);
+        switchEvent(setYear, setMonth, setDay);
     }
 
 }

@@ -9,7 +9,7 @@ function CalendarDays(props) {
     for (let i=1; i<currentDay; i++) {
         days.push(<label key={`empty${i}`} className="calendar__day empty"></label>)
     }
-    for (let i=1; i<=getDaysInMonth(); i++) {
+    for (let i=1; i<=getClassNameForDay(); i++) {
         days.push(<label onClick = {(e) => chooseDayEvent(e.target)} key={i} className={markDays(i)}>{i}</label>)
     }
     return days;
@@ -25,7 +25,7 @@ function CalendarDays(props) {
         return num;
     }
     
-    function getDaysInMonth() {
+    function getClassNameForDay() {
         const {setYear, setMonth} = props;
         return getDays(setYear, setMonth);
     }

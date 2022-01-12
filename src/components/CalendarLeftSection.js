@@ -21,14 +21,14 @@ function CalendarLeftSection(props) {
         </section>
     )
 
-    function changeYearFunction(year) {
+    function changeYearFunction(year, day) {
         const {changeCurrentYear} = props;
-        changeCurrentYear(year);
+        changeCurrentYear(year, day);
     }
 
-    function changeMonthFunction(year, month) {
+    function changeMonthFunction(year, month, day) {
         const {changeCurrentMonth} = props;
-        changeCurrentMonth(year, month);
+        changeCurrentMonth(year, month, day);
     }
 
     function chooseTheDay(day) {

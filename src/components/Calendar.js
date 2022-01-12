@@ -1,7 +1,7 @@
 import React from "react";
 
 import CalendarAPI from "./CalendarAPI";
-import DaysNaming from "../DaysNaming";
+import DaysNamingLanguages from "../DaysNamingLanguages";
 import CalendarLeftSection from "./CalendarLeftSection";
 import CalendarRightSection from "./CalendarRightSection";
 
@@ -9,7 +9,7 @@ class Calendar extends React.Component{
     constructor() {
         super() 
         this.api = new CalendarAPI();
-        this.language = new DaysNaming();
+        this.language = new DaysNamingLanguages();
         this.lang = 'pl';
         this.state = {
             data:[],
@@ -23,7 +23,6 @@ class Calendar extends React.Component{
 
     render() {
         const {currentDay, currentYear, currentMonth, months, days} = this.state;
-        
         return(
             <main className="main container">
                 <CalendarLeftSection currentYear={currentYear} currentMonth={currentMonth} currentDay={currentDay} months={months} days={days} changeCurrentYear={this.setStateForYear} changeCurrentMonth={this.setStateForMonths} dayChoosing={this.chooseTheDay}/>
@@ -47,44 +46,24 @@ class Calendar extends React.Component{
 
     //     OD TĄD
 
-    setStateForYear = (yearValue) => {
-        this.setState({
-            currentYear: yearValue,
-        });
-    }
-
-    setStateForMonths = (yearValue, monthValue) => {
-        this.setState({
-            currentMonth: monthValue,
-            currentYear: yearValue,
-        });
-    }
-
     setStateForDays = (dayValue) => {
         this.setState({
             currentDay: dayValue,
-        })
-    }
-
-    chooseTheDay = (day) => {
-        let {currentDay} = this.state;
-        let clickedDay = parseInt(day.innerText)
-        currentDay = clickedDay;
-        this.setState({
-            currentDay: currentDay,
-        })
-    }
-
-    setStateForYear = (yearValue) => {
-        this.setState({
-            currentYear: yearValue,
         });
     }
 
-    setStateForMonths = (yearValue, monthValue) => {
+    setStateForYear = (yearValue, dayValue) => {
+        this.setState({
+            currentYear: yearValue,
+            currentDay: dayValue,
+        });
+    }
+
+    setStateForMonths = (yearValue, monthValue, dayValue) => {
         this.setState({
             currentMonth: monthValue,
             currentYear: yearValue,
+            currentDay: dayValue,
         });
     }
 
