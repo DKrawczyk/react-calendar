@@ -1,10 +1,9 @@
 function CalendarInputs(props) {
     const {fields, errors, thisEvent} = props;
-    console.log(thisEvent);
     return (
         fields.map(el => {
             return (
-                <div className={`input__container input__container--${el.type}`}>
+                <div key={el.name} className={`input__container input__container--${el.type}`}>
                     <input type={el.type} name={el.name} value={el.value} placeholder={el.placeholder} className={el.className} id={el.id}></input>
                     <div className={`error__container error__container--${el.type}`}>
                         <span className="errors__list">

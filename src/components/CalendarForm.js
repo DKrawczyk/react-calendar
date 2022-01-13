@@ -71,9 +71,7 @@ class CalendarForm extends React.Component {
                 }
             }
             errorsCount += errors[field.name].length;
-        });
-        console.log(errorsCount);
-    
+        });    
         
         if (errorsCount > 0) {
 
