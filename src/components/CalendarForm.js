@@ -14,7 +14,6 @@ class CalendarForm extends React.Component {
             {type:"text", name:"email", placeholder:"Email", className:"input__field", id:"clicked", validationRules:{isRequired: true, regex: getEmailRegex()}},
             {type:"date", name:"date", placeholder:"Date", className:"input__field", id:"clicked", validationRules:{isRequired: true, regex: getDateRegex()}},
             {type:"time", name:"time", placeholder:"Time", className:"input__field", id:"clicked", validationRules:{isRequired: true, regex: getTimeRegex()}},
-            {type:"submit", className:"input__field", validationRules:{isRequired: false}},
         ]
     }
     state = {
@@ -32,6 +31,7 @@ class CalendarForm extends React.Component {
             <form onSubmit={this.dataValidation} className="form__event">
                 <div onChange={this.inputChange} className="event__insert">
                     <CalendarFormInputs fields={this.fields} errors={errorInformations} thisEvent={this.secondTest}/>
+                    {/* <input type="submit" className="input__field"></input> */}
                 </div>
             </form>
         )
@@ -48,10 +48,11 @@ class CalendarForm extends React.Component {
     dataValidation = (event) => {
         const validation = new CalendarFormValidate();
         const errors = {};
+        let errorsCount = 0;
         // event.preventDefault();
         this.fields.forEach(field => {
             errors[field.name] = [];
-        })
+        });
 
         this.fields.forEach(field => {
             const value = this.state[field.name];
@@ -67,10 +68,13 @@ class CalendarForm extends React.Component {
                     }
                 }
             }
+            errorsCount += errors[field.name].length; // aktualizuję liczbę błędów
         });
+        console.log(errorsCount)
 
-        if(errors.length > 0) {
-            // event.preventDefault();
+        if(errorsCount > 0) {
+            console.log('test');
+            event.preventDefault();
 
             // this.setState({
             //     errorInformations: errors,
@@ -79,7 +83,7 @@ class CalendarForm extends React.Component {
         // else {
             // this.setNewMeetingData();
         // }
-
+        event.preventDefault();
     }
 
     secondTest(el) {

@@ -14,10 +14,14 @@ git remote -v
 - sprowadzenie odpowiedniej formy daty z formularza aby wyszukac aktywne spotkania
 - walidacja roku przestępnego
 - klucz uuid w celu optymalizacji
+- dzielenie na komponenty
+- zewnbetrzne narzedzie z regexami
+- formularze przez petle
 
 
 - ulepszenie wyświetlenia daty
 - zaznaczanie dni gdzie są wydarzenia 
+- hooki i mniej przekazywania
 
 
 Zamiast 
