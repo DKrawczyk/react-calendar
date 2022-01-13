@@ -44,8 +44,6 @@ class Calendar extends React.Component{
         });
     }
 
-    //     OD TĄD
-
     setStateForDays = (dayValue) => {
         this.setState({
             currentDay: dayValue,
@@ -94,8 +92,6 @@ class Calendar extends React.Component{
             currentDay: currentDay,
         })
     }
-
-//      DOTĄD
 }
 
 export default Calendar;
