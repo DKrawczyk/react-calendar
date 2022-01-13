@@ -82,33 +82,8 @@
 }
 
 .event__insert {
-    width: 60%;
+    width: 100%;
     min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.div__error{
-    width: 40%;
-    min-height: 100%;
-    font-size: 0.9rem;
-}
-
-.error__list {
-    margin-top: 10%;
-}
-
-.error__list > h1 {
-    color: #1E212D;
-    font-weight: 500;
-}
-
-.error {
-    margin: 10px 0;
-    color: #1E212D;
-    font-weight: 500;
 }
 
 .label {
@@ -182,16 +157,18 @@
 
 .input__field[type=text] {
     min-height: 12%;
-    width: 100%;
+    width: 50%;
     font-weight: 800;
     text-indent: 20px;
     color: #1E212D;
+}
+.input__field[type=date] {
+    width: 30%;
 }
 
 .input__field[type=date], .input__field[type=time] {
     text-align: center;
     min-height: 10%;
-    width: 100%;
     font-weight: 500;
     color: #1E212D;
     cursor: pointer;
@@ -199,6 +176,7 @@
 
 .input__field[type=time] {
     min-height: 8%;
+    width: 20%;
 }
 
 #clicked:focus {
@@ -210,10 +188,9 @@
 }
 
 input[type=submit] {
+    margin-left: 20px;
     min-height: 8%;
-    border: none;
     background: #1E212D;
-    border-radius: 10px;
     color: #FAF3E0;
     font-size: 0.8rem;
 }
@@ -254,31 +231,36 @@ input[type=submit] {
     font-size: 1.5rem;
 }
 
-.input__container--text, .input__container--date, .input__container--time {
+.input__container {
+    margin: 20px 0;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    margin: 20px;
 }
 
 .input__container--text {
     min-height: 12%;
-    width: 70%;
 }
 
 .input__container--date {
     min-height: 10%;
-    width: 50%;
 }
 
 .input__container--time{
     min-height: 8%;
-    width: 30%;
-}
-
-.input__container--time{
-    min-height: 8%;
-    width: 30%;
 }
 
 .input__container--submit{
     min-height: 8%;
+}
+
+.errors__list {
+    text-align: center;
+}
+
+.error__container {
+    font-size: 0.8rem;
+    list-style: none;
+    display: flex;
+    align-items: center;
 }

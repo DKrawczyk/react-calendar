@@ -1,7 +1,7 @@
 import React from "react";
 import CalendarAPI from "./CalendarAPI";
 import CalendarFormValidate from "./CalendarFormValidate";
-import CalendarFormInputs from "./CalendarFormInputs";
+import CalendarInputs from "./CalendarInputs";
 import {getNameRegex, getEmailRegex, getDateRegex, getTimeRegex} from "../helpers/validationHelper";
 
 class CalendarForm extends React.Component {
@@ -26,12 +26,12 @@ class CalendarForm extends React.Component {
     }
 
     render() {
-        const {firstName, lastName, email, date, time, errorInformations} = this.state;
+        const {errorInformations} = this.state;
         return (
             <form onSubmit={this.dataValidation} className="form__event">
                 <div onChange={this.inputChange} className="event__insert">
-                    <CalendarFormInputs fields={this.fields} errors={errorInformations} thisEvent={this.secondTest}/>
-                    {/* <input type="submit" className="input__field"></input> */}
+                    <CalendarInputs fields={this.fields} errors={errorInformations} thisEvent={this.secondTest}/>
+                    <input type="submit" className="input__field"></input>
                 </div>
             </form>
         )
@@ -49,51 +49,53 @@ class CalendarForm extends React.Component {
         const validation = new CalendarFormValidate();
         const errors = {};
         let errorsCount = 0;
-        // event.preventDefault();
-        this.fields.forEach(field => {
-            errors[field.name] = [];
-        });
 
-        this.fields.forEach(field => {
+        this.fields.forEach((field) => {
+          errors[field.name] = [];
+
+        });
+    
+        this.fields.forEach((field) => {
             const value = this.state[field.name];
-            if(field.validationRules.isRequired) {
-                if(validation.isEmpty(value)) {
-                    return errors[field.name].push('Fields cannot be empty');
+
+            if (field.validationRules.isRequired) {
+                if (validation.isEmpty(value)) {
+                    errors[field.name].push("Field cannot be empty");
                 }
                 else {
-                    if(field.validationRules.regex) {
-                        if(!validation.checkDataCorrectness(field.regex, value)) {
-                            return errors[field.name].push('Incorrect format');
+                    if (field.validationRules.regex) {
+                        if(!validation.checkDataCorrectness(field.validationRules.regex, value)) {
+                            errors[field.name].push("Incorrect format");
                         }
                     }
                 }
             }
-            errorsCount += errors[field.name].length; // aktualizuję liczbę błędów
+            errorsCount += errors[field.name].length;
         });
-        console.log(errorsCount)
+        console.log(errorsCount);
+    
+        
+        if (errorsCount > 0) {
 
-        if(errorsCount > 0) {
-            console.log('test');
             event.preventDefault();
-
-            // this.setState({
-            //     errorInformations: errors,
-            // });
+            this.setState({
+                errorInformations: errors,
+            });
         }
-        // else {
-            // this.setNewMeetingData();
-        // }
-        event.preventDefault();
-    }
+
+        else {
+            this.setNewMeetingData();
+        }
+    };
 
     secondTest(el) {
-        const {firstName, lastName, email, date, time, errorInformations} = this.state;
+        const {errorInformations} = this.state;
 
         return errorInformations[el.name].map(i => <li>{i}</li>)
     }
 
     setNewMeetingData() {
-        const {firstName, lastName, email, date, time, errorInformations} = this.state;
+        const {firstName, lastName, email, date, time} = this.state;
         const newMeeting = {
             firstName: firstName,
             lastName: lastName,
@@ -108,10 +110,8 @@ class CalendarForm extends React.Component {
             email: '',
             date: '',
             time: '',
-            // errorInformations: ['New meeting added!'],
         });
-        console.log(errorInformations);
-        // this.sendNewMeeting(newMeeting);
+        this.sendNewMeeting(newMeeting);
     }
 
     setCorrectDate(date) {
