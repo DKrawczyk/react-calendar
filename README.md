@@ -185,7 +185,8 @@ Because of this project, I was able to see the *usefulness of hooks*. In Calenda
         return showMeetingList;
     }
 
-It was neccessary to pass values and props. Then I learned about hooks. We could make **Context** and a lot of this code won't be needed. I plan to correct this.
+It was neccessary to pass values and props. Then I learned about hooks. We could make **Context** and a lot of this code won't be needed. 
+I plan to correct this.
 
 I will add the display of meetings next to days of the month.
 
