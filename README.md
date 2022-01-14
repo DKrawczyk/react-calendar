@@ -190,5 +190,5 @@ It was neccessary to pass values and props. Then I learned about hooks. We could
 I will add the display of meetings next to days of the month.
 
 
-# 🙏 Special thanks
+# Special thanks 🙏
 Special thanks to my [Mentor - devmentor.pl](https://devmentor.pl/) for providing me with the task and code review.
