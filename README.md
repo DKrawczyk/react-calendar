@@ -1,13 +1,13 @@
-# REACT Calendar App
+# REACT Calendar App :calendar:
 
 ![Task Manager UI](https://github.com/DKrawczyk/react-calendar/blob/main/assets/preview.png?raw=true)
 
-Thanks for visiting my React Calendar app. This project is based on React library. It is called by me as "Meeting helper" :). This project was made by *link* MVP rules. That is why we can't see meetings in days at the current month. This is future functionality.
+Thanks for visiting my ***React Calendar app***. This project is based on React library. It is called by me as *"Meeting helper"* :slightly_smiling_face:. This project was made with keeping in mind about [MVP](https://www.biznesowerewolucje.com/mvp-minimum-viable-product-praktycznie/) rule. That is why we can't see meetings in days at the current month. This would be the future functionality.
 
 
 # Installation 
 
-This project uses node and npm. To run this project you should first install all dependencies. Install it by command:
+This project uses [node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/). To run this project you should first install all dependencies. Install it by command:
 
       npm i
 
@@ -17,22 +17,23 @@ To start your workspace, you should enter:
       npm start
 
 
-If your workspace is already running, start your local JSON Server by:
+If your workspace is already running, start your local **JSON Server** by:
 
       json-server --watch ./database/data.json --port 3005
 
 
 >
 >***Attention!**  
-> If the API is supposed to work, JSON-server must always be running. Sometimes, after using the command above, you should refresh your website.*
+> If the API is supposed to work, **JSON-server** must be always running. Sometimes, after using the command above, you should refresh your website.*
 >
 
-Your API is ready at this address:
+
+Your **API** is ready at this address:
 
     http://localhost:3005/meetings
 
 
-# Technologies and solutions
+# Technologies and solutions :toolbox:
 
 - In this project it was the first time I used the command:
 
@@ -40,31 +41,32 @@ Your API is ready at this address:
     
 This package is so much helpful!
 
-- As we said before, local API is made by JSON Server
 
-- HTML structure is named by BEM methodology
+- As we said before, local **API** is made by **JSON Server**
 
-- I used reset.css file
+- **HTML** structure is named by **BEM methodology**
 
-- In every rendered component, I used key or uuid library to make better optimalization
+- I used *reset.css* file
 
-- This application is divided into 15 components. Unfortunately, I didn't use hooks. Why? More information is below in the Conclusions for future projects tab.
+- In every rendered component, I used a special key to make better optimization for React. We could use also the **uuid** package.
+
+- This application is divided into **15 components**. Unfortunately, I didn't use *hooks*. Why? More information is below in the *Conclusions for future projects* tab.
 
 - In the base Calendar component inside construcotr we can see parametr:
 
       this.lang = 'pl';
 
-In the src folder, we can find DaysNamingLanguage. Here we can set a language for months and days. This is a future solution for more languages.
+ In the src folder, we can find **DaysNamingLanguage**. Here we can set a language for months and days. **This is a future solution for more languages**.
 
-- As you can see, we have a helpers folder. This folder includes files, which are solutions for future projects. We are using separate methods to make our work easier. For example:
+- As you can see, we have a *helpers folder*. This folder includes files, which are solutions for future projects. We are using separate methods to make our work easier. For example:
 
-    export function getNameRegex() {
-        return /^[\w'\-,.][^0-9_!¡?÷?¿\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/;
-    }
+          export function getNameRegex() {
+              return /^[\w'\-,.][^0-9_!¡?÷?¿\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/;
+          }
 
-We can use this regex a lot of times and our code would be still legible.
+We can use this **regex** a lot of times and our code would be still legible.
 
-- Our validation inputs are fully automatic and flexible. The way we wrote them allows us to use this method in our future projects. 
+- Our validation inputs are ***fully automatic and flexible***. The way we wrote them allows us to use this method in our future projects. 
 
       this.fields = [
             {type:"text", name:"firstName", placeholder:"First name", className:"input__field", id:"clicked", validationRules:{isRequired: true, regex: getNameRegex()}},
@@ -93,15 +95,25 @@ We can use this regex a lot of times and our code would be still legible.
 
 This validation is ready for development!
 
-- We are using FETCH to upload new meetings.
+- We are using **FETCH** to upload new meetings.
 
-- I had a problem with leap year. Didn't know how to check, how many days are in the current month the current year. It was a big problem. That's why I made another helper. Called 'date helper':
+- I had a problem with leap year. Didn't know how to check, how many days are in the current month at the current year. It was a big problem. That's why I made another helper. Called *'date helper'*:
 
       export function getDaysInMonth(currYear, currMonth) {
           return new Date(currYear, currMonth +1, 0).getDate();
       }
 
-This function return number of days in the current month and current year. Because of this, we don't have to make a lot of unnecessary conditional statements, like this:
+This function return number of days in the current month and current year. It is basing on the current month and year, which we set in the general state:
+
+          this.state = {
+              currentDay: new Date().getDate(),
+              currentYear: new Date().getFullYear(),
+              currentMonth: new Date().getMonth(),
+              ...
+          }
+
+*(That is why we should use hooks :))*
+Because of this solution, **we don't have to make a lot of unnecessary conditional statements**, like this:
 
 
     if(currentMonth === 0 || currentMonth === 2 || currentMonth === 4 || currentMonth === 6 || currentMonth === 7 || currentMonth === 9 || currentMonth === 11) {
@@ -119,20 +131,9 @@ This function return number of days in the current month and current year. Becau
     }
 
 
-It is basing on the current month and year, which we set in the general state:
+- At the beginning, the **new Date()** instance was really hard to figure out. This project helped me to understand how does it work and expand my knowledge. Now I know how to set the month, year and check the current day!
 
-    this.state = {
-        currentDay: new Date().getDate(),
-        currentYear: new Date().getFullYear(),
-        currentMonth: new Date().getMonth(),
-        ...
-    }
-
-(That is why we should use hooks :))
-
-- In the beginning, the date instance was really hard to figure out. This project helped me to understand how does it work and expand my knowledge. Now I know how to set the month, year and check the current day!
-
-- To don't have months starting from 0, we used array methods like below:
+- We used *array methods* to remove 0 from the start of the month and the day. Example below:
 
           setCorrectMonth(date){
               if(date.charAt(5) === '0') {
@@ -153,7 +154,7 @@ It is basing on the current month and year, which we set in the general state:
 
 Because of that, we will be able to automatically sign days, at every month, where we have set meetings.
 
-- I made simply filtered request to API. We can enter values and API will return the entered suggestions saved in our database. 
+- I made simply filtered request to **API**. We can enter values and **API** will return the entered suggestions saved in our *database*. 
 
           loadFilteredData(name, value) {
               return this._fetch(`?${name}_like=${value}`);
@@ -168,11 +169,11 @@ Because of that, we will be able to automatically sign days, at every month, whe
           }
 
 
-# Conclusions for future projects
+# Conclusions for future projects :brain:
 
 Next time I will use functions from external files in my work environment.
 
-Because of this project, I was able to see the usefulness of hooks. In Calendar Left and Right Section I had to write code in this way:
+Because of this project, I was able to see the *usefulness of hooks*. In Calendar Left and Right Section I had to write code in this way:
 
     function addDataFunction(data) {
         const {newMeeting} = props;
@@ -184,6 +185,10 @@ Because of this project, I was able to see the usefulness of hooks. In Calendar 
         return showMeetingList;
     }
 
-It was neccessary to pass values. Then I learned about hooks. We could make Context and a lot of this code won't be needed. I plan to correct this.
+It was neccessary to pass values and props. Then I learned about hooks. We could make **Context** and a lot of this code won't be needed. I plan to correct this.
 
 I will add the display of meetings next to days of the month.
+
+
+# 🙏 Special thanks
+Special thanks to my [Mentor - devmentor.pl](https://devmentor.pl/) for providing me with the task and code review.
