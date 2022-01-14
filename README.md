@@ -1,5 +1,7 @@
 # REACT Calendar App
 
+![Task Manager UI](https://github.com/DKrawczyk/react-calendar/blob/main/assets/preview.png?raw=true)
+
 Thanks for visiting my React Calendar app. This project is based on React library. It is called by me as "Meeting helper" :). This project was made by *link* MVP rules. That is why we can't see meetings in days at the current month. This is future functionality.
 
 
@@ -21,7 +23,8 @@ If your workspace is already running, start your local JSON Server by:
 
 
 >
->***Attention!**  If the API is to work, JSON-server must always be running. Sometimes, after using the command above, you should refresh your website.*
+>***Attention!**  
+> If the API is supposed to work, JSON-server must always be running. Sometimes, after using the command above, you should refresh your website.*
 >
 
 Your API is ready at this address:
@@ -131,38 +134,38 @@ It is basing on the current month and year, which we set in the general state:
 
 - To don't have months starting from 0, we used array methods like below:
 
-    setCorrectMonth(date){
-        if(date.charAt(5) === '0') {
-            return date.slice(0,5) + date.slice(6, date.length);
-        }
-        return date;
-    }
+          setCorrectMonth(date){
+              if(date.charAt(5) === '0') {
+                  return date.slice(0,5) + date.slice(6, date.length);
+              }
+              return date;
+          }
 
-    setCorrectDay(date) {
-        if(date.charAt(7) === '0') {
-            return date.slice(0,7) + date.slice(8, date.length);
-        }
-        else if(!(date.charAt(7) === '1' || date.charAt(7) === '2' || date.charAt(7) === '3') && date.charAt(8) === '0') {
-            return date.slice(0,8) + date.slice(9, date.length);
-        }
-        return date;
-    }
+          setCorrectDay(date) {
+              if(date.charAt(7) === '0') {
+                  return date.slice(0,7) + date.slice(8, date.length);
+              }
+              else if(!(date.charAt(7) === '1' || date.charAt(7) === '2' || date.charAt(7) === '3') && date.charAt(8) === '0') {
+                  return date.slice(0,8) + date.slice(9, date.length);
+              }
+              return date;
+          }
 
 Because of that, we will be able to automatically sign days, at every month, where we have set meetings.
 
 - I made simply filtered request to API. We can enter values and API will return the entered suggestions saved in our database. 
 
-    loadFilteredData(name, value) {
-        return this._fetch(`?${name}_like=${value}`);
-    }
+          loadFilteredData(name, value) {
+              return this._fetch(`?${name}_like=${value}`);
+          }
 
-    ...
+          ...
 
-    renderFilteredData(name, value) {
-        return this.api.loadFilteredData(name, value)
-            .then(data => console.log(data))
-            .catch(err => console.log(err))
-    }
+          renderFilteredData(name, value) {
+              return this.api.loadFilteredData(name, value)
+                  .then(data => console.log(data))
+                  .catch(err => console.log(err))
+          }
 
 
 # Conclusions for future projects
