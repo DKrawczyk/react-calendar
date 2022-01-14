@@ -5,7 +5,7 @@
 Thanks for visiting my ***React Calendar app***. This project is based on React library. It is called by me as *"Meeting helper"* :slightly_smiling_face:. This project was made with keeping in mind about [MVP](https://www.biznesowerewolucje.com/mvp-minimum-viable-product-praktycznie/) rule. That is why we can't see meetings in days at the current month. This would be the future functionality.
 
 
-# Installation 
+# Installation :floppy_disk:
 
 This project uses [node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/). To run this project you should first install all dependencies. Install it by command:
 
